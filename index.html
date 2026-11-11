@@ -73,11 +73,21 @@
             background-color: #fff;
         }
 
+        .image-card a {
+            display: block;
+            text-decoration: none;
+        }
+
         .image-card img {
             width: 100%;
             height: 180px;
             object-fit: cover;
             display: block;
+            transition: opacity 0.2s ease;
+        }
+
+        .image-card img:hover {
+            opacity: 0.85;
         }
 
         .image-card span {
@@ -107,20 +117,46 @@
         <h2 class="folder-title">Concepts and Early Iterations / Architecture</h2>
         <div class="image-grid">
             <div class="image-card">
-                <img src="Concepts%20and%20Early%20Iterations/Architecture/Copy%20of%20ENG1%20Group%209%20UML%20-%20Page%201.png" alt="Copy of ENG1 Group 9 UML - Page 1">
+                <a href="Concepts%20and%20Early%20Iterations/Architecture/Copy%20of%20ENG1%20Group%209%20UML%20-%20Page%201.png" target="_blank">
+                    <img src="Concepts%20and%20Early%20Iterations/Architecture/Copy%20of%20ENG1%20Group%209%20UML%20-%20Page%201.png" alt="Copy of ENG1 Group 9 UML - Page 1">
+                </a>
                 <span>Copy of ENG1 Group 9 UML - Page 1</span>
             </div>
             <div class="image-card">
-                <img src="Concepts%20and%20Early%20Iterations/Architecture/ENG1%20Group%209%20UML%20-%20Page%201.png" alt="ENG1 Group 9 UML - Page 1">
+                <a href="Concepts%20and%20Early%20Iterations/Architecture/ENG1%20Group%209%20UML%20-%20Page%201.png" target="_blank">
+                    <img src="Concepts%20and%20Early%20Iterations/Architecture/ENG1%20Group%209%20UML%20-%20Page%201.png" alt="ENG1 Group 9 UML - Page 1">
+                </a>
                 <span>ENG1 Group 9 UML - Page 1</span>
             </div>
             <div class="image-card">
-                <img src="Concepts%20and%20Early%20Iterations/Architecture/GROUP%20PROJECT%20-%20UML%20Draft.pdf" alt="GROUP PROJECT - UML Draft">
-                <span>GROUP PROJECT - UML Draft.pdf</span>
+                <a href="Concepts%20and%20Early%20Iterations/Architecture/GROUP-PROJECT%20UML%20DRAFT.png" target="_blank">
+                    <img src="Concepts%20and%20Early%20Iterations/Architecture/GROUP-PROJECT%20UML%20DRAFT.png" alt="GROUP-PROJECT UML DRAFT">
+                </a>
+                <span>GROUP-PROJECT UML DRAFT</span>
             </div>
             <div class="image-card">
-                <img src="Concepts%20and%20Early%20Iterations/Architecture/UML.docx" alt="UML.docx">
-                <span>UML.docx</span>
+                <a href="Concepts%20and%20Early%20Iterations/Architecture/Screenshot%202026-11-11%20191636.png" target="_blank">
+                    <img src="Concepts%20and%20Early%20Iterations/Architecture/Screenshot%202026-11-11%20191636.png" alt="Screenshot 2026-11-11 191636">
+                </a>
+                <span>Screenshot 2026-11-11 191636</span>
+            </div>
+            <div class="image-card">
+                <a href="Concepts%20and%20Early%20Iterations/Architecture/Screenshot%202026-11-11%20191758.png" target="_blank">
+                    <img src="Concepts%20and%20Early%20Iterations/Architecture/Screenshot%202026-11-11%20191758.png" alt="Screenshot 2026-11-11 191758">
+                </a>
+                <span>Screenshot 2026-11-11 191758</span>
+            </div>
+            <div class="image-card">
+                <a href="Concepts%20and%20Early%20Iterations/Architecture/UML-1.jpg" target="_blank">
+                    <img src="Concepts%20and%20Early%20Iterations/Architecture/UML-1.jpg" alt="UML-1">
+                </a>
+                <span>UML-1</span>
+            </div>
+            <div class="image-card">
+                <a href="Concepts%20and%20Early%20Iterations/Architecture/UML-2.jpg" target="_blank">
+                    <img src="Concepts%20and%20Early%20Iterations/Architecture/UML-2.jpg" alt="UML-2">
+                </a>
+                <span>UML-2</span>
             </div>
         </div>
     </div>
@@ -128,8 +164,26 @@
     <script>
         function toggleFolder(folderId) {
             const folder = document.getElementById(folderId);
-            folder.classList.toggle('show');
+            const isShowing = folder.classList.toggle('show');
+            
+            // Update URL hash without reloading the page
+            if (isShowing) {
+                history.pushState(null, null, '#' + folderId);
+            } else {
+                history.pushState(null, null, window.location.pathname);
+            }
         }
+
+        // Auto-open folder if the URL contains the hash tag on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                const targetFolder = document.getElementById(hash);
+                if (targetFolder) {
+                    targetFolder.classList.add('show');
+                }
+            }
+        });
     </script>
 
 </body>
