@@ -1,10 +1,10 @@
 package com.eng1.goozers;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -55,7 +55,7 @@ public class Main extends ApplicationAdapter {
         batch.draw(map, 0, 0);
 
         interact();
-        // font.draw(batch, "(" + character.getX() + "," + character.getY() + ")", 200, map.getHeight() - 10);
+        font.draw(batch, "(" + character.getX() + "," + character.getY() + ")", 200, map.getHeight() - 10);
         // line above is for testing if you need coordinates of character
         character.draw(batch);
         batch.end();
@@ -91,7 +91,7 @@ public class Main extends ApplicationAdapter {
 
         float playerX = character.getX() + character.getWidth() / 2f;
         float playerY = character.getY() + character.getHeight() / 2f;
-
+        
         statueX = 145;
         statueY = 145; // CHANGE THIS LATER!   TOO NASTY AT THE MOMENT!
 
