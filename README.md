@@ -6,14 +6,14 @@ You are a UoY student surrounded by very hungry geese on a sunny spring day on c
 
 *Status: Assessment 1 (greenfield) in development. Due 12:00, Mon 16 November 2026.*
 
-**Team:** Cohort 4 Group 9 (Duckers) 
+**Team:** Cohort 4 Group 9 (GooseGo!) 
 
 **Members:** Hayden Chew, Khalid Huseyn, Boyuan Yao, Charlie Murrel, Ellis Freddie, Theo Shaykhulov, Nasser Alshafi 
 
 ### **Links:** 
 - Team Websites: <URL>
 - Latest executable JAR: <URL>
-- Documents (PDFs): See the <ins>Documentation<ins> Section:
+- Documents (PDFs): See the <ins>Documentation<ins> Section: 
 
 ### Table of Contents
 1. Gameplay
