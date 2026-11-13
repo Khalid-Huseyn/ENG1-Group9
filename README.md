@@ -8,7 +8,7 @@ You are a UoY student surrounded by very hungry geese on a sunny spring day on c
 
 **Team:** Cohort 4 Group 9 (GooseGo!) 
 
-**Members:** Hayden Chew, Khalid Huseyn, Boyuan Yao, Charlie Murrel, Ellis Freddie, Theo Shaykhulov, Nasser Alshafi 
+**Members:** Hayden Chew, Khalid Huseyn, Boyuan Yao, Charlie Murrell, Ellis Freddie, Theo Shaykhulov, Nasser Alshafi 
 
 ### **Links:** 
 - Team Websites: <URL>
