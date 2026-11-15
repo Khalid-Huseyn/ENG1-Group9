@@ -83,7 +83,7 @@ public class Main extends ApplicationAdapter {
         debugRenderer = new Box2DDebugRenderer();
         viewport = new FitViewport(320f, 240f);
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-        viewport.getCamera().position.set(player.getCenterX(), player.getCenterY(), 0);
+        viewport.getCamera().position.set(player.getCentreX(), player.getCentreY(), 0);
 
         ui = new UI();
         ui.createHealthBar(player);
@@ -137,8 +137,8 @@ public class Main extends ApplicationAdapter {
     }
 
     /**
-     * reads movement keys and tells the ducks where to chase
-     * - Box2D does the work to find where everyone ends up, and then the images and camerea move to match it
+     * reads movement keys and lets the ducks chase, peck or move away from the player
+     * - Box2D does the work to find where everyone ends up, and then the images and camera move to match it
      */
     private void updateGame() {
         player.input();
@@ -149,7 +149,7 @@ public class Main extends ApplicationAdapter {
             spawnTimer = 0f;
         }
         for (NPC npc : npcs) {
-            npc.chase(player.getCenterX(), player.getCenterY() - 8f);
+            npc.chase(player);
         }
 
         /**
@@ -170,13 +170,24 @@ public class Main extends ApplicationAdapter {
         }
 
         updateCamera();
+
+        // remove fleeing ducks once they leave the camera view
+        // work backwards so removing a duck does not make us skip the next one
+        for (int i = npcs.size() - 1; i >= 0; i--) {
+            NPC npc = npcs.get(i);
+            if (npc.Despawn(viewport)) {
+                // remove the collision body as well as the duck from the list
+                world.destroyBody(npc.getBody());
+                npcs.remove(i);
+            }
+        }
     }
 
     /** creates a duck 120 pixels from the player in a random direction the ducks can also appear outside the map */
     private void spawnNPC() {
         float angle = MathUtils.random(0f, MathUtils.PI2);
-        float x = player.getCenterX() + MathUtils.cos(angle) * 120f;
-        float y = player.getCenterY() - 8f + MathUtils.sin(angle) * 120f;
+        float x = player.getCentreX() + MathUtils.cos(angle) * 120f;
+        float y = player.getCentreY() - 8f + MathUtils.sin(angle) * 120f;
         NPC npc = new NPC(world, npcTexture, x, y);
 
         npcs.add(npc);
@@ -187,8 +198,8 @@ public class Main extends ApplicationAdapter {
      * - traditional practice in 2D games
      */
     private void updateCamera() {
-        float playerX = player.getCenterX();
-        float playerY = player.getCenterY();
+        float playerX = player.getCentreX();
+        float playerY = player.getCentreY();
         float cameraX = viewport.getCamera().position.x;
         float cameraY = viewport.getCamera().position.y;
 
@@ -227,8 +238,8 @@ public class Main extends ApplicationAdapter {
 
     /** checks whether the player is near Long Boi and presses E, then shows the message */
     private void drawInteraction() {
-        float dx = player.getCenterX() - statueX;
-        float dy = player.getCenterY() - statueY;
+        float dx = player.getCentreX() - statueX;
+        float dy = player.getCentreY() - statueY;
         nearDuck = dx * dx + dy * dy <= 22f * 22f;
 
         if (nearDuck && Gdx.input.isKeyJustPressed(Input.Keys.E)) {

@@ -114,12 +114,12 @@ public class Player {
     }
 
     /** returns the middle of the player image from left to right for the ducks and camera */
-    public float getCenterX() {
+    public float getCentreX() {
         return character.getX() + character.getWidth() / 2f;
     }
 
     /** returns the middle of the player image from bottom to top for the ducks and camera */
-    public float getCenterY() {
+    public float getCentreY() {
         return character.getY() + character.getHeight() / 2f;
     }
 

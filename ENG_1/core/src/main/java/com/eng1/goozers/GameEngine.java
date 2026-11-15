@@ -3,7 +3,7 @@ package com.eng1.goozers;
 /**
  * keeps track of whether the game is paused
  * Main checks this before moving the player and ducks
- * the isPaused varaible is true so the game starts paused until the player presses Esc
+ * the isPaused variable is true so the game starts paused until the player presses Esc
  */
 public class GameEngine {
     private boolean isPaused = true;

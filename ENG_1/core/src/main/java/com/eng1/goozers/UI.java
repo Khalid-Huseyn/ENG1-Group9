@@ -78,7 +78,7 @@ public class UI {
 
     /**
      * moves the highlight to the chosen slot and slot numbers start at zero
-     * - for example: key 1 selects 0, key 8 selects slot 8
+     * - for example: key 1 selects 0, key 8 selects slot 7
      */
     private void selectSlot(int index) {
         currentSlot = index;
