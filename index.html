@@ -138,7 +138,8 @@
             color: #0056b3;
         }
 
-        .week-box ul {
+        .week-box ul,
+        .week-box ol {
             margin: 0;
             padding-left: 18px;
             font-size: 14px;
@@ -555,29 +556,29 @@
         <!-- WEEK 7 -->
         <div id="week-7-folder" class="folder-content">
             <div class="folder-header">
-                <h3 class="folder-title">Week 7 Progress: Gameplay Integration, <code>GameEngine</code> Refactor &amp; Portal (09 Nov – 15 Nov 2026)</h3>
+                <h3 class="folder-title">Week 7 Progress: Gameplay Integration, Pause Loop &amp; <code>Impl1</code> Kickoff (09 Nov – 15 Nov 2026)</h3>
                 <span class="status-badge status-completed">Completed</span>
             </div>
             <div class="week-grid">
                 <div class="week-box">
                     <h4>Planned Objectives</h4>
                     <ul>
-                        <li>Integrate core gameplay loop (goose pecking, annoyance bar, bread, inventory, hidden events).</li>
-                        <li>Verify rendering performance and deploy full 5-deliverable website portal.</li>
+                        <li>Integrate core gameplay loop (map structure, goose pecking, annoyance bar, bread, inventory, Long Boi hitbox).</li>
+                        <li>Verify rendering performance, separate update/draw logic, and deploy website portal.</li>
                     </ul>
                 </div>
                 <div class="week-box">
                     <h4>Completed Work &amp; Evidence</h4>
                     <ul>
-                        <li>Verified playable lakeside prototype with <code>LongBoiStatue</code> trigger hitbox and goose flock at <code>242 FPS</code> (13 Nov).</li>
-                        <li>Completed map structure, goose pecking with post-peck speed reduction, pausing, annoyance bar, bread dispersal, and inventory (12–14 Nov).</li>
-                        <li>Refactored <code>GameEngine.java</code> out of <code>Main.java</code> with paused start state and 60 FPS cap; deployed full website portal (15 Nov).</li>
+                        <li>Completed map structure, goose pecking with post-peck speed reduction, pausing, annoyance bar, bread, and inventory (12 Nov).</li>
+                        <li>Verified lakeside prototype with <code>LongBoiStatue</code> hitbox and goose flock at <code>242 FPS</code> (13 Nov); completed boolean paused start, separated update from draw, and pause indicator (<code>✅</code>, 13 Nov).</li>
+                        <li>Initiated <code>Impl1.pdf</code> documentation and published 6-point Assessment 1 "Definition of Done" checklist alongside full website portal (15 Nov).</li>
                     </ul>
                 </div>
                 <div class="week-box">
                     <h4>Plan Evolution</h4>
                     <ul>
-                        <li>Added <code>GameEngine</code> extraction and 60 FPS cap after uncapped prototype testing highlighted the need to separate simulation ticks from frame rendering.</li>
+                        <li>Flagged <code>GameEngine.java</code> extraction and 60 FPS cap as pending (<code>⚠️</code>) to prioritize finishing documentation (<code>Impl1.pdf</code>) first, followed by a strict 6-point completion checklist for the final sprint.</li>
                     </ul>
                 </div>
             </div>
@@ -590,27 +591,32 @@
         <!-- WEEK 8 -->
         <div id="week-8-folder" class="folder-content">
             <div class="folder-header">
-                <h3 class="folder-title">Week 8 Progress: Final Testing, JAR Packaging &amp; Submission (16 Nov – 18 Nov 2026)</h3>
+                <h3 class="folder-title">Week 8 Progress: Final "Definition of Done" Sprint, Testing &amp; Submission (16 Nov – 18 Nov 2026)</h3>
                 <span class="status-badge status-progress">In Progress</span>
             </div>
             <div class="week-grid">
                 <div class="week-box">
-                    <h4>Planned Objectives</h4>
-                    <ul>
-                        <li>Execute headless JUnit tests (<code>T-SYS-*</code>) and audit third-party licences in <code>Impl1</code>.</li>
-                        <li>Package standalone executable JAR, verify on lab machines, and submit Assessment 1.</li>
-                    </ul>
+                    <h4>Prioritized Completion Checklist (15–18 Nov)</h4>
+                    <ol>
+                        <li><strong>5-Minute Countdown &amp; Timeout:</strong> Starts at <code>5:00</code> paused, freezes on pause, loss at <code>0:00</code>; <code>Esc</code> cannot restart an ended round.</li>
+                        <li><strong>Map Boundaries:</strong> Player confined to playable map; geese spawn inside; both hidden events reachable.</li>
+                        <li><strong>Two Usable Starting Items:</strong> <code>BreadCrumbs</code> + second usable starting item from requirements (distinct from <code>LongBoiStatue</code> <code>BusTicket</code> reward).</li>
+                        <li><strong>Goose Dispersal &amp; Victory:</strong> Dispersal gameplay effect + clear win condition before timeout, reachable with available items/spawns.</li>
+                        <li><strong>Two One-Time Hidden Events:</strong> Expand Long Boi proximity dialogue into Event 1 + add Event 2 (both hidden until triggered with observable results).</li>
+                        <li><strong>Two Non-Duplicating Counters:</strong> Track items used and unique hidden events triggered (reopening one-time dialogue leaves count unchanged).</li>
+                    </ol>
                 </div>
                 <div class="week-box">
-                    <h4>Completed Work &amp; Evidence</h4>
+                    <h4>Verification, Packaging &amp; Documentation</h4>
                     <ul>
-                        <li>Cross-document traceability check across <code>Req1</code>, <code>Arch1</code>, <code>Plan1</code>, <code>Risk1</code>, and <code>Impl1</code> underway ahead of the 18 Nov deadline.</li>
+                        <li>Complete <code>Impl1.pdf</code> licence audit and finalize <code>GameEngine.java</code> extraction + 60 FPS stability cap.</li>
+                        <li>Run headless JUnit tests (<code>T-SYS-*</code>), package standalone executable JAR, verify on lab machines, and submit Assessment 1 by 18 Nov.</li>
                     </ul>
                 </div>
                 <div class="week-box">
                     <h4>Plan Evolution</h4>
                     <ul>
-                        <li>Reserved dedicated 3-day buffer at the end of the schedule for JAR portability testing and final peer review (Mitigation <code>R08</code>).</li>
+                        <li>Introduced explicit "What counts as done" acceptance criteria for every remaining Assessment 1 requirement alongside a 3-day testing/JAR buffer (Mitigation <code>R08</code>).</li>
                     </ul>
                 </div>
             </div>
