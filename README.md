@@ -11,22 +11,9 @@ You are a UoY student surrounded by very hungry geese on a sunny spring day on c
 **Members:** Hayden Chew, Khalid Huseyn, Boyuan Yao, Charlie Murrell, Ellis Freddie, Theo Shaykhulov, Nasser Alshafi 
 
 ### **Links:** 
-- Team Websites: <URL>
+- Team Website: [Website](https://khalid-huseyn.github.io/ENG1-Group9/)
 - Latest executable JAR: <URL>
 - Documents (PDFs): See the <ins>Documentation<ins> Section: 
-
-### Table of Contents
-1. Gameplay
-2. Controls
-3. Tech Stack
-4. Getting Started
-5. Project Structure
-6. Documentation
-7. Requirements and traceability
-8. Testing
-9. Third-Party Libraries and Assets
-10. Contributing
-11. License
 
 ### Gameplay
 - The game lasts up to **5 minutes** and **starts paused**. You can pause at any time.
