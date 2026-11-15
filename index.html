@@ -17,9 +17,23 @@
             margin-bottom: 24px;
         }
 
+        .section-heading {
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 14px;
+            color: #212529;
+        }
+
+        .section-divider {
+            border: 0;
+            border-top: 2px solid #dee2e6;
+            margin: 32px 0;
+        }
+
         /* Navigation Menu */
         .menu-bar {
             display: flex;
+            flex-wrap: wrap;
             gap: 12px;
             margin-bottom: 24px;
         }
@@ -36,27 +50,55 @@
             transition: background-color 0.2s ease;
         }
 
-        .folder-btn:hover {
+        .folder-btn:hover,
+        .folder-btn.active {
             background-color: #0056b3;
         }
 
-        /* Gallery Container */
+        /* Folder Content Container */
         .folder-content {
-            display: none; 
+            display: none;
             background-color: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
         }
 
         .folder-content.show {
-            display: block; 
+            display: block;
         }
 
         .folder-title {
             margin-top: 0;
             margin-bottom: 16px;
             font-size: 20px;
+        }
+
+        /* File Links List inside Deliverables */
+        .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .file-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            color: #0056b3;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .file-link:hover {
+            background-color: #e9ecef;
+            border-color: #adb5bd;
         }
 
         /* Image Grid */
@@ -105,81 +147,179 @@
         <h1>ENG1 Group 9</h1>
     </header>
 
-    <!-- Folder Selection Menu -->
-    <nav class="menu-bar">
-        <button class="folder-btn" onclick="toggleFolder('architecture-folder')">
-            📁 Architecture
-        </button>
-    </nav>
+    <!-- Existing Concepts & Design Evidence Section -->
+    <section>
+        <h2 class="section-heading">Design Evidence &amp; Early Iterations</h2>
+        <nav class="menu-bar">
+            <button class="folder-btn" data-target="architecture-concepts-folder" onclick="toggleFolder('architecture-concepts-folder')">
+                📁 Architecture Concepts
+            </button>
+        </nav>
 
-    <!-- Architecture Folder Content -->
-    <div id="architecture-folder" class="folder-content">
-        <h2 class="folder-title">Concepts and Early Iterations / Architecture</h2>
-        <div class="image-grid">
-            <div class="image-card">
-                <a href="Concepts%20and%20Early%20Iterations/Architecture/GROUP-PROJECT%20UML%20DRAFT.png" target="_blank">
-                    <img src="Concepts%20and%20Early%20Iterations/Architecture/GROUP-PROJECT%20UML%20DRAFT.png" alt="GROUP-PROJECT UML DRAFT">
-                </a>
-                <span>GROUP-PROJECT UML DRAFT</span>
-            </div>
-            <div class="image-card">
-                <a href="Concepts%20and%20Early%20Iterations/Architecture/PascalCase%20ENG1%20Group%209%20UML%20-%20Page%201.png" target="_blank">
-                    <img src="Concepts%20and%20Early%20Iterations/Architecture/PascalCase%20ENG1%20Group%209%20UML%20-%20Page%201.png" alt="PascalCase ENG1 Group 9 UML - Page 1">
-                </a>
-                <span>PascalCase ENG1 Group 9 UML - Page 1</span>
-            </div>
-            <div class="image-card">
-                <a href="Concepts%20and%20Early%20Iterations/Architecture/snake_case%20ENG1%20Group%209%20UML%20LucidChart.png" target="_blank">
-                    <img src="Concepts%20and%20Early%20Iterations/Architecture/snake_case%20ENG1%20Group%209%20UML%20LucidChart.png" alt="snake_case ENG1 Group 9 UML LucidChart">
-                </a>
-                <span>snake_case ENG1 Group 9 UML LucidChart</span>
-            </div>
-            <div class="image-card">
-                <a href="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%201.png" target="_blank">
-                    <img src="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%201.png" alt="UML Sketch 1">
-                </a>
-                <span>UML Sketch 1</span>
-            </div>
-            <div class="image-card">
-                <a href="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%202.png" target="_blank">
-                    <img src="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%202.png" alt="UML Sketch 2">
-                </a>
-                <span>UML Sketch 2</span>
-            </div>
-            <div class="image-card">
-                <a href="Concepts%20and%20Early%20Iterations/Architecture/UML-1.jpg" target="_blank">
-                    <img src="Concepts%20and%20Early%20Iterations/Architecture/UML-1.jpg" alt="UML-1">
-                </a>
-                <span>UML-1</span>
-            </div>
-            <div class="image-card">
-                <a href="Concepts%20and%20Early%20Iterations/Architecture/UML-2.jpg" target="_blank">
-                    <img src="Concepts%20and%20Early%20Iterations/Architecture/UML-2.jpg" alt="UML-2">
-                </a>
-                <span>UML-2</span>
+        <div id="architecture-concepts-folder" class="folder-content">
+            <h3 class="folder-title">Concepts and Early Iterations / Architecture</h3>
+            <div class="image-grid">
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/GROUP-PROJECT%20UML%20DRAFT.png" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/GROUP-PROJECT%20UML%20DRAFT.png" alt="GROUP-PROJECT UML DRAFT">
+                    </a>
+                    <span>GROUP-PROJECT UML DRAFT</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/PascalCase%20ENG1%20Group%209%20UML%20-%20Page%201.png" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/PascalCase%20ENG1%20Group%209%20UML%20-%20Page%201.png" alt="PascalCase ENG1 Group 9 UML - Page 1">
+                    </a>
+                    <span>PascalCase ENG1 Group 9 UML - Page 1</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/snake_case%20ENG1%20Group%209%20UML%20LucidChart.png" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/snake_case%20ENG1%20Group%209%20UML%20LucidChart.png" alt="snake_case ENG1 Group 9 UML LucidChart">
+                    </a>
+                    <span>snake_case ENG1 Group 9 UML LucidChart</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%201.png" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%201.png" alt="UML Sketch 1">
+                    </a>
+                    <span>UML Sketch 1</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%202.png" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%202.png" alt="UML Sketch 2">
+                    </a>
+                    <span>UML Sketch 2</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/UML-1.jpg" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/UML-1.jpg" alt="UML-1">
+                    </a>
+                    <span>UML-1</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/UML-2.jpg" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/UML-2.jpg" alt="UML-2">
+                    </a>
+                    <span>UML-2</span>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Clear Dividing Line -->
+    <hr class="section-divider">
+
+    <!-- Deliverables Section -->
+    <section id="deliverables">
+        <h2 class="section-heading">Deliverables</h2>
+
+        <!-- 5 Deliverable Folder Buttons -->
+        <nav class="menu-bar">
+            <button class="folder-btn" data-target="req-folder" onclick="toggleFolder('req-folder')">
+                📁 Requirement
+            </button>
+            <button class="folder-btn" data-target="arch-folder" onclick="toggleFolder('arch-folder')">
+                📁 Architecture
+            </button>
+            <button class="folder-btn" data-target="plan-folder" onclick="toggleFolder('plan-folder')">
+                📁 Method Selection &amp; Planning
+            </button>
+            <button class="folder-btn" data-target="risk-folder" onclick="toggleFolder('risk-folder')">
+                📁 Risk Management and Mitigation
+            </button>
+            <button class="folder-btn" data-target="impl-folder" onclick="toggleFolder('impl-folder')">
+                📁 Implementation
+            </button>
+        </nav>
+
+        <!-- 1. Requirement Folder -->
+        <div id="req-folder" class="folder-content">
+            <h3 class="folder-title">Requirement</h3>
+            <div class="file-list">
+                <a class="file-link" href="Req1.pdf" target="_blank">📄 Req1.pdf — Requirements Specification</a>
+            </div>
+        </div>
+
+        <!-- 2. Architecture Folder -->
+        <div id="arch-folder" class="folder-content">
+            <h3 class="folder-title">Architecture</h3>
+            <div class="file-list">
+                <a class="file-link" href="Arch1.pdf" target="_blank">📄 Arch1.pdf — System Architecture</a>
+            </div>
+        </div>
+
+        <!-- 3. Method Selection & Planning Folder -->
+        <div id="plan-folder" class="folder-content">
+            <h3 class="folder-title">Method Selection &amp; Planning</h3>
+            <div class="file-list">
+                <a class="file-link" href="Plan1.pdf" target="_blank">📄 Plan1.pdf — Method Selection &amp; Project Plan</a>
+                <!-- Add links to your weekly plan snapshots here as needed -->
+            </div>
+        </div>
+
+        <!-- 4. Risk Management and Mitigation Folder -->
+        <div id="risk-folder" class="folder-content">
+            <h3 class="folder-title">Risk Management and Mitigation</h3>
+            <div class="file-list">
+                <a class="file-link" href="Risk1.pdf" target="_blank">📄 Risk1.pdf — Risk Assessment &amp; Mitigation</a>
+            </div>
+        </div>
+
+        <!-- 5. Implementation Folder -->
+        <div id="impl-folder" class="folder-content">
+            <h3 class="folder-title">Implementation</h3>
+            <div class="file-list">
+                <a class="file-link" href="Impl1.pdf" target="_blank">📄 Impl1.pdf — Implementation Report</a>
+                <a class="file-link" href="GoosePatrol.jar" target="_blank">🎮 Executable Game JAR (Update filename to match your .jar)</a>
+                <a class="file-link" href="https://github.com/Khalid-Huseyn/ENG1-Group9" target="_blank">💻 GitHub Source Code Repository</a>
+            </div>
+        </div>
+    </section>
 
     <script>
+        function openFolder(folderId) {
+            document.querySelectorAll('.folder-content').forEach(el => {
+                el.classList.remove('show');
+            });
+            document.querySelectorAll('.folder-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            const targetFolder = document.getElementById(folderId);
+            const targetBtn = document.querySelector(`.folder-btn[data-target="${folderId}"]`);
+            if (targetFolder) {
+                targetFolder.classList.add('show');
+            }
+            if (targetBtn) {
+                targetBtn.classList.add('active');
+            }
+        }
+
         function toggleFolder(folderId) {
             const folder = document.getElementById(folderId);
-            const isShowing = folder.classList.toggle('show');
-            
-            if (isShowing) {
-                history.pushState(null, null, '#' + folderId);
-            } else {
+            const isAlreadyOpen = folder.classList.contains('show');
+
+            if (isAlreadyOpen) {
+                folder.classList.remove('show');
+                const btn = document.querySelector(`.folder-btn[data-target="${folderId}"]`);
+                if (btn) btn.classList.remove('active');
                 history.pushState(null, null, window.location.pathname);
+            } else {
+                openFolder(folderId);
+                history.pushState(null, null, '#' + folderId);
             }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
             const hash = window.location.hash.substring(1);
-            if (hash) {
-                const targetFolder = document.getElementById(hash);
-                if (targetFolder) {
-                    targetFolder.classList.add('show');
-                }
+            if (hash && document.getElementById(hash)) {
+                openFolder(hash);
+            }
+        });
+
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                openFolder(hash);
             }
         });
     </script>
