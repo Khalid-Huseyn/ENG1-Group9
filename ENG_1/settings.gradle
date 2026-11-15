@@ -1,8 +1,8 @@
+// Includes core for the game code and lwjgl3 for opening the desktop window.
 plugins {
   // Applies the foojay-resolver plugin to allow automatic download of JDKs.
   id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
-// A list of which subprojects to load as part of the same larger project.
-// You can remove Strings from the list and reload the Gradle project
-// if you want to temporarily disable a subproject.
+// a list of which subprojects to load as part of the same larger project.
+// you can remove Strings from the list and reload the Gradle project, if you want to temporarily disable a subproject.
 include 'lwjgl3', 'core'

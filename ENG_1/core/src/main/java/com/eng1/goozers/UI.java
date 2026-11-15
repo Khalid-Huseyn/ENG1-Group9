@@ -12,6 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+/**
+ * Main draws the map and character first
+ * UI then draws the health bar and inventory slots over the game
+ *
+ * reads health from Player and uses keys 1 to 8 to highlight a slot
+ *
+ * using items still needs to be added
+ */
 public class UI {
 
     private Stage uiStage;
@@ -28,9 +36,11 @@ public class UI {
     private Texture fullBar;
     private Actor healthBar;
 
+    /** the UI object builds the inventory display and then Main adds the health bar afterwards */
     public UI() {
         createUI();}
 
+    /** createUI() places eight inventory slots at the bottom centre of the screen */
     private void createUI() {
         uiStage = new Stage(new ScreenViewport());
         invTexture = new Texture(Gdx.files.internal("ui/inventBar.png"));
@@ -60,16 +70,25 @@ public class UI {
         selectSlot(0);
     }
 
+    /** loads the image that highlights the selected slot */
     private void createHighlight() {
         hlTexture = new Texture(Gdx.files.internal("ui/hlSprite.png"));
         hlTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
     }
 
+    /**
+     * moves the highlight to the chosen slot and slot numbers start at zero
+     * - for example: key 1 selects 0, key 8 selects slot 8
+     */
     private void selectSlot(int index) {
         currentSlot = index;
         hl.setPosition((slotSize + index * slotSize) * scaleF, 1 + slotSize * scaleF);
     }
 
+    /**
+     * checks keys 1 to 8 and draws the health bar and inventory, even while paused
+     * - this works because Main calls UI.render() on every frame
+     */
     public void render() {
         for (int i = 0; i < slotCount; i++) {
 
@@ -83,14 +102,20 @@ public class UI {
         uiStage.draw();
     }
 
+    /**
+     * returns the selected slot number for future item features
+     * - lets other code ask which slot is selected
+     */
     public int getCurrentSlot() {
         return currentSlot;
     }
 
+    /** adjusts the UI to fit the window size even when changing it */
     public void resize(int width, int height) {
         uiStage.getViewport().update(width, height, true);
     }
 
+    /** frees the UI images and drawing resources that belongs to UI from memory */
     public void dispose() {
         uiStage.dispose();
         invTexture.dispose();
@@ -99,6 +124,7 @@ public class UI {
         if (fullBar != null) fullBar.dispose();
     }
 
+    /** adds a health bar that checks Player for the current health each time it is drawn */
     public void createHealthBar(Player player) {
         hpBarTexture = new Texture(Gdx.files.internal("ui/healthBar.png"));
         fullBar = new Texture(Gdx.files.internal("ui/fullBar.png"));
@@ -110,6 +136,11 @@ public class UI {
             public void draw(Batch batch, float parentAlpha) {
                 float percentage = player.getHpPercentage();
                 batch.draw(hpBarTexture, getX(), getY(), getWidth(), getHeight());
+                /**
+                 * show only enough of the coloured bar to match the remaining health
+                 * - we can do this because the code draws the background bar first,
+                 * then fills it with the amount of health left
+                 */
                 int sourceWidth = Math.round(fullBar.getWidth() * percentage);
                 float visibleWidth = getWidth() * percentage;
 

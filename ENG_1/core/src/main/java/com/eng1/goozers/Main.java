@@ -18,12 +18,24 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+ * runs the game and draws the map and draws the player and the ducks on top of
+ * the map
+ * Lwjgl3Launcher opens the game window
+ * Main checks GameEngine to see whether the game is paused
+ * UI draws the health bar and inventory slots
+ */
 public class Main extends ApplicationAdapter {
 
+    /*
+     * Box2D measures positions in metres one metre here equals 32 drawing pixels
+     * for example: 2 metres = 64 pixels on the map
+     */
     private static final float PPM = 32f;
     private static final float TIME_STEP = 1f / 60f;
 
     private UI ui;
+    private final GameEngine gameEngine = new GameEngine();
     private World world;
     private Body longBoiBody;
     private Player player;
@@ -33,7 +45,6 @@ public class Main extends ApplicationAdapter {
     private FitViewport viewport;
     private SpriteBatch batch;
     private BitmapFont font;
-    private boolean paused = false;
 
     private final float statueX = 227f;
     private final float statueY = 305f;
@@ -46,6 +57,10 @@ public class Main extends ApplicationAdapter {
     private Texture npcTexture;
     private float spawnTimer = 0f;
 
+    /**
+     * create() runs at startup it loads the images and creates:
+     * - the player, first duck, the collision system, the camera, and the UI
+     */
     @Override
     public void create() {
         map = new Texture(Gdx.files.internal("map/test_map2.png"));
@@ -55,7 +70,7 @@ public class Main extends ApplicationAdapter {
         font = new BitmapFont();
 
         Box2D.init();
-        world = new World(new Vector2(0, 0), true); // No gravity: top-down game
+        world = new World(new Vector2(0, 0), true); // both values 0 = no gravity: top-down game
         player = new Player(world, 100f, 100f);
         createLongBoi();
 
@@ -74,54 +89,90 @@ public class Main extends ApplicationAdapter {
         ui.createHealthBar(player);
     }
 
+    /** checks Esc, moves the characters during play and draws the game frame by frame (each frame) */
     @Override
     public void render() {
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            paused = !paused;}
+            if (gameEngine.isPaused()) {
+                gameEngine.resumeGame();
+            } else {
+                gameEngine.pauseGame();
+            }
+        }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
-            player.takeDamage(10);}
-
+        boolean paused = gameEngine.isPaused();
         if (!paused) {
-            player.input();
-            spawnTimer += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
-
-            if (spawnTimer >= 3f && npcs.size() < 10) {spawnNPC();spawnTimer = 0f;}
-            for (NPC npc : npcs) {npc.chase(player.getCenterX(), player.getCenterY() - 8f);}
-
-            accumulator += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
-            while (accumulator >= 1f / 60f) {world.step(1f / 60f, 6, 2);accumulator -= 1f / 60f;}
-
-            player.update();
-
-            for (NPC npc : npcs) {npc.update();}
-
-            updateCamera();
-            batch.setProjectionMatrix(viewport.getCamera().combined);}
-
+            if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
+                // press H during play to test losing 10 health -Dev Feature-
+                player.takeDamage(10);
+            }
+            updateGame();
+        }
 
         ScreenUtils.clear(0, 0, 0, 1);
         viewport.apply();
+        batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
         batch.draw(map, 0, 0);
-        for (NPC npc : npcs) {npc.draw(batch);}
+        for (NPC npc : npcs) {
+            npc.draw(batch);
+        }
         player.draw(batch);
-        font.draw(batch, "(" + player.getX() + "," + player.getY() + ")",
-            viewport.getCamera().position.x - viewport.getWorldWidth() / 2f + 10f,
-            viewport.getCamera().position.y + viewport.getWorldHeight() / 2f - 10f);
 
-        if (paused) {batch.draw(pauseScreen,
-                viewport.getCamera().position.x - viewport.getWorldWidth() / 2f,
-                viewport.getCamera().position.y - viewport.getWorldHeight() / 2f,
-                viewport.getWorldWidth(),
-                viewport.getWorldHeight());}
-        if (!paused) {drawInteraction();}
+        float left = viewport.getCamera().position.x - viewport.getWorldWidth() / 2f;
+        float top = viewport.getCamera().position.y + viewport.getWorldHeight() / 2f;
+        if (paused) {
+            batch.draw(pauseScreen, left, top - viewport.getWorldHeight(),
+                    viewport.getWorldWidth(), viewport.getWorldHeight());
+            font.draw(batch, "Paused - Press Esc to resume", left + 10f, top - 30f);
+        } else {
+            font.draw(batch, "(" + player.getX() + "," + player.getY() + ")", left + 10f, top - 10f);
+            // only check E in the method and show the Long Boi message while playing
+            drawInteraction();
+        }
 
         batch.end();
         debugRenderer.render(world, viewport.getCamera().combined.cpy().scl(PPM));
-        ui.render();}
+        ui.render();
+    }
 
+    /**
+     * reads movement keys and tells the ducks where to chase
+     * - Box2D does the work to find where everyone ends up, and then the images and camerea move to match it
+     */
+    private void updateGame() {
+        player.input();
+        spawnTimer += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
+
+        if (spawnTimer >= 3f && npcs.size() < 10) {
+            spawnNPC();
+            spawnTimer = 0f;
+        }
+        for (NPC npc : npcs) {
+            npc.chase(player.getCenterX(), player.getCenterY() - 8f);
+        }
+
+        /**
+         * limit the time added after a slow frame, then calculate movement in 1/60-second steps
+         * - we do this because BOX2D works time in chunks of 1/60 a second so if a frame is slow,
+         * - the game will cap how much time is needed to avoid trying to catchup
+         */
+        accumulator += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
+        while (accumulator >= TIME_STEP) {
+            world.step(TIME_STEP, 6, 2);
+            accumulator -= TIME_STEP;
+        }
+
+        player.update();
+
+        for (NPC npc : npcs) {
+            npc.update();
+        }
+
+        updateCamera();
+    }
+
+    /** creates a duck 120 pixels from the player in a random direction the ducks can also appear outside the map */
     private void spawnNPC() {
         float angle = MathUtils.random(0f, MathUtils.PI2);
         float x = player.getCenterX() + MathUtils.cos(angle) * 120f;
@@ -131,26 +182,37 @@ public class Main extends ApplicationAdapter {
         npcs.add(npc);
     }
 
+    /**
+     * lets the player move within a small central area before the camera follows
+     * - traditional practice in 2D games
+     */
     private void updateCamera() {
         float playerX = player.getCenterX();
         float playerY = player.getCenterY();
         float cameraX = viewport.getCamera().position.x;
         float cameraY = viewport.getCamera().position.y;
 
-
         if (playerX > cameraX + DEAD_ZONE_W_H / 2f) {
-            cameraX = playerX - DEAD_ZONE_W_H / 2f;}
+            cameraX = playerX - DEAD_ZONE_W_H / 2f;
+        }
         if (playerX < cameraX - DEAD_ZONE_W_H / 2f) {
-            cameraX = playerX + DEAD_ZONE_W_H / 2f;}
+            cameraX = playerX + DEAD_ZONE_W_H / 2f;
+        }
         if (playerY > cameraY + DEAD_ZONE_W_H / 2f) {
-            cameraY = playerY - DEAD_ZONE_W_H / 2f;}
+            cameraY = playerY - DEAD_ZONE_W_H / 2f;
+        }
         if (playerY < cameraY - DEAD_ZONE_W_H / 2f) {
-            cameraY = playerY + DEAD_ZONE_W_H / 2f;}
+            cameraY = playerY + DEAD_ZONE_W_H / 2f;
+        }
 
         viewport.getCamera().position.set(cameraX, cameraY, 0);
 
     }
 
+    /**
+     * to avoid the player from walking through the statue since it's a picture from the map,
+     * we add an invisible 20-by-20-pixel box that blocks movement through the statue
+     */
     private void createLongBoi() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -163,27 +225,33 @@ public class Main extends ApplicationAdapter {
         shape.dispose();
     }
 
+    /** checks whether the player is near Long Boi and presses E, then shows the message */
     private void drawInteraction() {
         float dx = player.getCenterX() - statueX;
         float dy = player.getCenterY() - statueY;
         nearDuck = dx * dx + dy * dy <= 22f * 22f;
 
         if (nearDuck && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            inspectedDuck = !inspectedDuck;}
+            inspectedDuck = !inspectedDuck;
+        }
         if (nearDuck) {
             String message = inspectedDuck
-                ? "Help me pass my exam Long Boi!"
-                : "Press E to interact";
-            font.draw(batch, message, 10, map.getHeight() - 10);}
-        else {
-            inspectedDuck = false;}
+                    ? "Help me pass my exam Long Boi!"
+                    : "Press E to interact";
+            font.draw(batch, message, 10, map.getHeight() - 10);
+        } else {
+            inspectedDuck = false;
+        }
     }
 
+    /** adjusts the game view and UI when the window changes size */
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, false);
-        ui.resize(width, height);}
+        ui.resize(width, height);
+    }
 
+    /** frees the images, text and physics resources when the game is done using them and closes */
     @Override
     public void dispose() {
         map.dispose();
