@@ -71,6 +71,7 @@ public class Main extends ApplicationAdapter {
         viewport.getCamera().position.set(player.getCenterX(), player.getCenterY(), 0);
 
         ui = new UI();
+        ui.createHealthBar(player);
     }
 
     @Override
@@ -78,6 +79,9 @@ public class Main extends ApplicationAdapter {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             paused = !paused;}
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
+            player.takeDamage(10);}
 
         if (!paused) {
             player.input();

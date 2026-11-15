@@ -3,17 +3,18 @@ package com.eng1.goozers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class UI {
 
     private Stage uiStage;
-
     private Texture invTexture;
     private Texture hlTexture;
     private Image hl;
@@ -23,6 +24,9 @@ public class UI {
     private static final int slotCount = 8;
     private static final int slotSize = 16;
     private static final float scaleF = 1.5f;
+    private Texture hpBarTexture;
+    private Texture fullBar;
+    private Actor healthBar;
 
     public UI() {
         createUI();}
@@ -91,5 +95,31 @@ public class UI {
         uiStage.dispose();
         invTexture.dispose();
         hlTexture.dispose();
+        if (hpBarTexture != null) hpBarTexture.dispose();
+        if (fullBar != null) fullBar.dispose();
+    }
+
+    public void createHealthBar(Player player) {
+        hpBarTexture = new Texture(Gdx.files.internal("ui/healthBar.png"));
+        fullBar = new Texture(Gdx.files.internal("ui/fullBar.png"));
+        hpBarTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        fullBar.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        healthBar = new Actor() {
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+                float percentage = player.getHpPercentage();
+                batch.draw(hpBarTexture, getX(), getY(), getWidth(), getHeight());
+                int sourceWidth = Math.round(fullBar.getWidth() * percentage);
+                float visibleWidth = getWidth() * percentage;
+
+                if (sourceWidth > 0) {
+                    batch.draw(fullBar, getX(), getY(), visibleWidth, getHeight(), 0, 0,
+                        sourceWidth, fullBar.getHeight(),
+                        false, false);}}};
+
+        healthBar.setSize(hpBarTexture.getWidth(), hpBarTexture.getHeight());
+        healthBar.setPosition(10, 10);
+        uiStage.addActor(healthBar);
     }
 }

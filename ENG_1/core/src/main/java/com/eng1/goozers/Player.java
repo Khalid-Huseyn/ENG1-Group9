@@ -13,11 +13,13 @@ import com.badlogic.gdx.physics.box2d.World;
 public class Player {
 
     private static final float PPM = 32f;
-    private static final float SPEED = 50f; // Pixels per second
+    private static final float SPEED = 50f;
 
     private final Texture texture;
     private final Sprite character;
     private final Body body;
+    private final int maxHP = 100;
+    private int currentHP = maxHP;
 
     public Player(World world, float startX, float startY) {
         texture = new Texture(Gdx.files.internal("map/character.png"));
@@ -51,13 +53,13 @@ public class Player {
         float length = (float) Math.sqrt(dx * dx + dy * dy);
         if (length > 0f) {
             dx /= length;
-            dy /= length;}
+            dy /= length;
+        }
 
         body.setLinearVelocity(dx * SPEED / PPM, dy * SPEED / PPM);
     }
 
     public void update() {
-        // A Box2D body's position is in metres; the sprite is in pixels.
         character.setPosition(
             body.getPosition().x * PPM - 16f,
             body.getPosition().y * PPM - 16f
@@ -86,6 +88,19 @@ public class Player {
 
     public void dispose() {
         texture.dispose();
-        // Main owns the World, so it also owns disposal of the Box2D bodies.
     }
+
+    public void takeDamage(int damage) {
+        if ((currentHP - damage) > 0) {
+            currentHP = currentHP - damage;
+        }
+        // else -> launch #lose menu
+    }
+
+    public float getHpPercentage() {
+        return (float) currentHP / maxHP;
+    }
+
+    public int getCurrentHP() {
+        return currentHP;}
 }
