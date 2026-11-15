@@ -1,3 +1,4 @@
+// Lists the external libraries the game code can use.
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 eclipse.project.name = appName + '-core'
 

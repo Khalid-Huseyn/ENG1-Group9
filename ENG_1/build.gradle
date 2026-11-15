@@ -1,3 +1,4 @@
+// Sets common Java options and creates a list of game assets for both modules.
 buildscript {
   repositories {
     mavenCentral()

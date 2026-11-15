@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
+ * Helps Lwjgl3Launcher start the game on Windows, macOS and Linux.
  * A helper object for game startup, featuring three utilities related to LWJGL3 on various operating systems.
  * <p>
  * The utilities are as follows:
