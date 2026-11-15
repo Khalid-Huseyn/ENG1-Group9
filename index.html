@@ -11,7 +11,7 @@
             padding: 24px;
             background-color: #f8f9fa;
             color: #212529;
-            line-height: 1.5;
+            line-height: 1.55;
         }
 
         header {
@@ -20,6 +20,7 @@
 
         header h1 {
             margin: 0 0 6px 0;
+            font-size: 28px;
         }
 
         .team-meta {
@@ -93,17 +94,19 @@
 
         .folder-title {
             margin: 0;
-            font-size: 20px;
+            font-size: 21px;
         }
 
         .doc-section {
-            margin-bottom: 24px;
+            margin-bottom: 26px;
         }
 
         .doc-section h4 {
             margin: 0 0 10px 0;
             font-size: 17px;
             color: #0056b3;
+            border-left: 4px solid #007bff;
+            padding-left: 10px;
         }
 
         .doc-section p,
@@ -117,7 +120,14 @@
             margin-bottom: 6px;
         }
 
-        /* File Links List inside Deliverables */
+        code {
+            background-color: #f1f3f5;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        /* Action Buttons inside Deliverables */
         .file-list {
             display: flex;
             flex-wrap: wrap;
@@ -128,7 +138,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 16px;
+            padding: 9px 15px;
             background-color: #e7f1ff;
             border: 1px solid #b6d4fe;
             border-radius: 6px;
@@ -136,12 +146,33 @@
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
+            cursor: pointer;
             transition: background-color 0.2s ease, border-color 0.2s ease;
         }
 
         .file-link:hover {
             background-color: #cfe2ff;
             border-color: #9ec5fe;
+        }
+
+        .pdf-embed-box {
+            display: none;
+            margin-bottom: 22px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: #f8f9fa;
+        }
+
+        .pdf-embed-box.show {
+            display: block;
+        }
+
+        .pdf-embed-box iframe {
+            width: 100%;
+            height: 620px;
+            border: none;
+            display: block;
         }
 
         /* Data Tables */
@@ -180,6 +211,7 @@
             border-radius: 4px;
             font-size: 12px;
             font-weight: 600;
+            white-space: nowrap;
         }
 
         .badge-a1 {
@@ -265,896 +297,4 @@
     <section>
         <h2 class="section-heading">Design Evidence &amp; Early Iterations</h2>
         <nav class="menu-bar">
-            <button class="folder-btn" data-target="architecture-concepts-folder" onclick="toggleFolder('architecture-concepts-folder')">
-                📁 Architecture Concepts
-            </button>
-        </nav>
-
-        <div id="architecture-concepts-folder" class="folder-content">
-            <div class="folder-header">
-                <h3 class="folder-title">Concepts and Early Iterations / Architecture</h3>
-            </div>
-            <div class="image-grid">
-                <div class="image-card">
-                    <a href="Concepts%20and%20Early%20Iterations/Architecture/GROUP-PROJECT%20UML%20DRAFT.png" target="_blank">
-                        <img src="Concepts%20and%20Early%20Iterations/Architecture/GROUP-PROJECT%20UML%20DRAFT.png" alt="GROUP-PROJECT UML DRAFT">
-                    </a>
-                    <span>GROUP-PROJECT UML DRAFT</span>
-                </div>
-                <div class="image-card">
-                    <a href="Concepts%20and%20Early%20Iterations/Architecture/PascalCase%20ENG1%20Group%209%20UML%20-%20Page%201.png" target="_blank">
-                        <img src="Concepts%20and%20Early%20Iterations/Architecture/PascalCase%20ENG1%20Group%209%20UML%20-%20Page%201.png" alt="PascalCase ENG1 Group 9 UML - Page 1">
-                    </a>
-                    <span>PascalCase ENG1 Group 9 UML - Page 1</span>
-                </div>
-                <div class="image-card">
-                    <a href="Concepts%20and%20Early%20Iterations/Architecture/snake_case%20ENG1%20Group%209%20UML%20LucidChart.png" target="_blank">
-                        <img src="Concepts%20and%20Early%20Iterations/Architecture/snake_case%20ENG1%20Group%209%20UML%20LucidChart.png" alt="snake_case ENG1 Group 9 UML LucidChart">
-                    </a>
-                    <span>snake_case ENG1 Group 9 UML LucidChart</span>
-                </div>
-                <div class="image-card">
-                    <a href="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%201.png" target="_blank">
-                        <img src="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%201.png" alt="UML Sketch 1">
-                    </a>
-                    <span>UML Sketch 1</span>
-                </div>
-                <div class="image-card">
-                    <a href="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%202.png" target="_blank">
-                        <img src="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%202.png" alt="UML Sketch 2">
-                    </a>
-                    <span>UML Sketch 2</span>
-                </div>
-                <div class="image-card">
-                    <a href="Concepts%20and%20Early%20Iterations/Architecture/UML-1.jpg" target="_blank">
-                        <img src="Concepts%20and%20Early%20Iterations/Architecture/UML-1.jpg" alt="UML-1">
-                    </a>
-                    <span>UML-1</span>
-                </div>
-                <div class="image-card">
-                    <a href="Concepts%20and%20Early%20Iterations/Architecture/UML-2.jpg" target="_blank">
-                        <img src="Concepts%20and%20Early%20Iterations/Architecture/UML-2.jpg" alt="UML-2">
-                    </a>
-                    <span>UML-2</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Clear Dividing Line -->
-    <hr class="section-divider">
-
-    <!-- Deliverables Section -->
-    <section id="deliverables">
-        <h2 class="section-heading">Deliverables</h2>
-
-        <!-- 5 Deliverable Folder Buttons -->
-        <nav class="menu-bar">
-            <button class="folder-btn" data-target="req-folder" onclick="toggleFolder('req-folder')">
-                📁 Requirement
-            </button>
-            <button class="folder-btn" data-target="arch-folder" onclick="toggleFolder('arch-folder')">
-                📁 Architecture
-            </button>
-            <button class="folder-btn" data-target="plan-folder" onclick="toggleFolder('plan-folder')">
-                📁 Method Selection &amp; Planning
-            </button>
-            <button class="folder-btn" data-target="risk-folder" onclick="toggleFolder('risk-folder')">
-                📁 Risk Management and Mitigation
-            </button>
-            <button class="folder-btn" data-target="impl-folder" onclick="toggleFolder('impl-folder')">
-                📁 Implementation
-            </button>
-        </nav>
-
-        <!-- =========================================================
-             1. REQUIREMENT FOLDER (Req1.pdf)
-             ========================================================= -->
-        <div id="req-folder" class="folder-content">
-            <div class="folder-header">
-                <h3 class="folder-title">2.0 Requirement</h3>
-                <div class="file-list">
-                    <a class="file-link" href="Req1.pdf" target="_blank">📄 Download / View Req1.pdf</a>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h4>2.1 Introduction to the Requirements</h4>
-                <p><strong>Elicitation:</strong> Requirements came from three sources: the Product Brief and Assessment Paper (ENG1 Group Assessment 1 and 2), team meetings, and customer feedback. Meeting 2 (5 October) reviewed the assessment and prepared customer questions. Meeting 3 (7 October) recorded gameplay ideas and questions. Meeting 4 (12 October) allocated the requirements work. Meeting 5 (14 October) required requirement IDs to link to the architecture, and Meeting 7 added the annoyance meter, score tracker, and peck behaviour. After 22 October the team worked mainly through Discord and shared documents, with later changes recorded in the other deliverables.</p>
-                <p><strong>Negotiation:</strong> Questions were prepared on escape, pausing, items, events, usability, and deployment. On 8 October, the customer replied that geese should not be harmed by the player, that the game is to start paused, and that about 90% of the bread may be used [C]. SYS-07, SYS-15, and SYS-16 were updated accordingly. Where no reply was available for the goose cap and peck rule, labelled assumptions were recorded (End of 2b) and each requirement was given a testable value that can change if the customer disagrees. Assessment 1 requires two initial items, two hidden events, a timer, and counters, so everything beyond that is marked A2 [A, P].</p>
-                <p><strong>Presentation &amp; Referencing System:</strong> User requirements (USR) state what the player needs, and system requirements (SYS) state the observable behaviour, each linked to its parent user requirement and accompanied by an objective test (following NASA guidance that requirements be unique, verifiable, and traceable [N]). Non-functional requirements (NFR) cover quality and delivery constraints. IDs carry the prefix <code>REQ-</code> (omitted in tables below) and are never reused; each ID is cited in Architecture (Arch1, Section 3.5), code comments, and test names (<code>T-SYS-01</code>, etc.).</p>
-                <p><strong>Basis Key:</strong> Brief = Product Brief [P] or Assessment [A] | Customer = Customer Reply [C] | Team = Decision in Meeting Minutes [M] or Team Design.</p>
-            </div>
-
-            <div class="doc-section">
-                <h4>2.2 User Requirements</h4>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>User ID</th>
-                                <th>Player Requirement</th>
-                                <th>Scope</th>
-                                <th>Basis</th>
-                                <th>System Links</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>USR-01</strong></td>
-                                <td>The player shall control a UoY student avatar within a bounded map.</td>
-                                <td><span class="badge badge-a1">A1</span> (Campus-Like Scenery A2)</td>
-                                <td>Brief</td>
-                                <td>SYS-01</td>
-                            </tr>
-                            <tr>
-                                <td><strong>USR-02</strong></td>
-                                <td>The player shall start paused and be able to pause and resume at any time.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Brief</td>
-                                <td>SYS-02, 03</td>
-                            </tr>
-                            <tr>
-                                <td><strong>USR-03</strong></td>
-                                <td>The player shall win by dispersing all geese, collecting the bus ticket [and reaching the bus station] within 5 minutes.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Brief, Customer</td>
-                                <td>SYS-04, 06, 07, 15, 16</td>
-                            </tr>
-                            <tr>
-                                <td><strong>USR-04</strong></td>
-                                <td>Use initial inventory items to manage geese.</td>
-                                <td><span class="badge badge-a1">A1</span> two, <span class="badge badge-a2">A2</span> five or more</td>
-                                <td>Brief</td>
-                                <td>SYS-06, 11</td>
-                            </tr>
-                            <tr>
-                                <td><strong>USR-05</strong></td>
-                                <td>Collect and use map pickup items.</td>
-                                <td><span class="badge badge-a2">A2</span></td>
-                                <td>Brief</td>
-                                <td>SYS-12</td>
-                            </tr>
-                            <tr>
-                                <td><strong>USR-06</strong></td>
-                                <td>Trigger hidden events with positive or negative effects.</td>
-                                <td><span class="badge badge-a1">A1</span> two, <span class="badge badge-a2">A2</span> five or more</td>
-                                <td>Brief</td>
-                                <td>SYS-08, 13</td>
-                            </tr>
-                            <tr>
-                                <td><strong>USR-07</strong></td>
-                                <td>Be pecked by geese which fills an annoyance bar that ends the game when full.</td>
-                                <td><span class="badge badge-a2">A2</span></td>
-                                <td>Team</td>
-                                <td>SYS-05, 14</td>
-                            </tr>
-                            <tr>
-                                <td><strong>USR-08</strong></td>
-                                <td>Receive a score based on speed, item use and event handling.</td>
-                                <td><span class="badge badge-a2">A2</span></td>
-                                <td>Brief</td>
-                                <td>SYS-10</td>
-                            </tr>
-                            <tr>
-                                <td><strong>USR-09</strong></td>
-                                <td>Understands the objective and controls of the game.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Brief</td>
-                                <td>NFR-06</td>
-                            </tr>
-                            <tr>
-                                <td><strong>USR-10</strong></td>
-                                <td>See the gametime, counters and annoyance level.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Brief, Team</td>
-                                <td>SYS-03, 08, 09</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h4>System Requirements</h4>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>System ID</th>
-                                <th>Requirement and Test</th>
-                                <th>Scope</th>
-                                <th>Basis</th>
-                                <th>Parent</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>SYS-01</strong></td>
-                                <td>The system shall confine the avatar to the traversable area of the map.<br><em>Test:</em> Moving into each boundary or blocked tile leaves the position unchanged.</td>
-                                <td><span class="badge badge-a1">A1</span> Simple Map, <span class="badge badge-a2">A2</span> Campus Scenery</td>
-                                <td>Brief</td>
-                                <td>USR-01</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-02</strong></td>
-                                <td>The system shall start paused. While paused, the timer, player, geese, events and item effects shall be frozen.<br><em>Test:</em> The game states before and after 10s of pause are identical and resuming does not count the paused time.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Brief, Team</td>
-                                <td>USR-02</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-03</strong></td>
-                                <td>The system shall count down 300 seconds of active play and display the remaining time.<br><em>Test:</em> 60s of play reduces it by 60&plusmn;1 s, and 30s paused leaves it unchanged.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Brief</td>
-                                <td>USR-02, 10</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-04</strong></td>
-                                <td>The system shall spawn [N] geese at the start and add geese as the player collects bread. Geese shall pursue the player.<br><em>Test:</em> With a stationary player, an unobstructed goose moves closer, and the goose count never exceeds the maximum.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Team</td>
-                                <td>USR-03</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-05</strong></td>
-                                <td>A goose within [1 Tile] of the player shall peck at most once every 2s. Each peck shall raise the annoyance bar by [10] up to a maximum of [100]. Geese shall not block the player's movement.<br><em>Test:</em> Each peck raises the bar by the same amount, and the bar never exceeds its maximum.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Team</td>
-                                <td>USR-07</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-06</strong></td>
-                                <td>Items shall let the player feed, distract or otherwise occupy geese. Each item shall apply its documented effect to eligible geese and be consumed when used.<br><em>Test:</em> Each initial item applies its effect, and a used item is removed from the inventory.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Brief, Team</td>
-                                <td>USR-03, 04</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-07</strong></td>
-                                <td>The game shall end in victory when within the time limit, all geese are dispersed, and the player holds the bus ticket.<br><em>Test:</em> With each prerequisite absent and then present, victory occurs only when all hold.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Brief, Customer</td>
-                                <td>USR-03</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-08</strong></td>
-                                <td>The system shall count items used and hidden events triggered. Each accepted item used and each first event trigger shall add one.<br><em>Test:</em> The counters go 0, 1, 2 over two uses, and a rejected use is not counted.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Brief</td>
-                                <td>USR-06, 10</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-09</strong></td>
-                                <td>The interface shall display the remaining time, inventory, both counters and the annoyance bar during play.<br><em>Test:</em> The displayed values match the game state after an item use, an event trigger and a pause and resume.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Brief, Team</td>
-                                <td>USR-07, 10</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-10</strong></td>
-                                <td>The system shall calculate a score from completion time, item use and event outcomes.<br><em>Test:</em> With other inputs fixed, a faster win gives a higher base score, and the formula is checked by unit tests.</td>
-                                <td><span class="badge badge-a2">A2</span></td>
-                                <td>Brief</td>
-                                <td>USR-08</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-11</strong></td>
-                                <td>The initial inventory shall contain two usable items in A1 and at least five in A2: [Bread], [Bus Ticket]. The inventory capacity is 2.<br><em>Test:</em> Inspect the inventory before any pickup or event and use each item.</td>
-                                <td><span class="badge badge-a1">A1</span> / <span class="badge badge-a2">A2</span></td>
-                                <td>Brief, Team</td>
-                                <td>USR-04</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-12</strong></td>
-                                <td>The map shall contain at least five additional pickup items in A2. A collected item shall be added to the inventory and removed from the map.<br><em>Test:</em> Collect and use each, and confirm it cannot be collected twice.</td>
-                                <td><span class="badge badge-a2">A2</span></td>
-                                <td>Brief</td>
-                                <td>USR-05</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-13</strong></td>
-                                <td>The game shall contain two hidden events in A1 [Interacting with Long Boi Statue], [Getting on the bus] and at least five in A2. Each shall be invisible until triggered, then apply its documented positive or negative effect once.<br><em>Test:</em> Nothing is shown before activation, and the effect matches the specification after it.</td>
-                                <td><span class="badge badge-a1">A1</span> / <span class="badge badge-a2">A2</span></td>
-                                <td>Brief</td>
-                                <td>USR-06</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-14</strong></td>
-                                <td>The game shall end in a loss when the timer reaches zero or the annoyance bar is full.<br><em>Test:</em> Each trigger produces the loss screen.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Team</td>
-                                <td>USR-03, 07</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-15</strong></td>
-                                <td>The map shall contain collectable bread. Collecting it shall add to the player's breadcount, and the player shall use bread to disperse geese. The bread available shall allow all geese to be dispersed using about 90% of it.<br><em>Test:</em> Collect and use bread, check the count and effect on geese.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Customer</td>
-                                <td>USR-03, 04</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-16</strong></td>
-                                <td>The Long Boi Statue shall give the player the bus ticket once, and only when all geese are dispersed.<br><em>Test:</em> The ticket is not given while any goose remains, and is given once when none remain.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Customer</td>
-                                <td>USR-03</td>
-                            </tr>
-                            <tr>
-                                <td><strong>SYS-17</strong></td>
-                                <td>The interface shall show a waypoint marker pointing to the current objective.<br><em>Test:</em> The marker points at the next objective.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Team</td>
-                                <td>USR-10</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h4>Non-Functional Requirements</h4>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Requirement and Planned Acceptance Check</th>
-                                <th>Scope</th>
-                                <th>Basis</th>
-                                <th>Parent</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>NFR-01</strong></td>
-                                <td>The game shall use Java 17.<br><em>Test:</em> Inspect the build configuration and build with JDK 17.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Brief</td>
-                                <td>None</td>
-                            </tr>
-                            <tr>
-                                <td><strong>NFR-02</strong></td>
-                                <td>The submission shall include documented source code and an executable JAR containing all dependencies.<br><em>Test:</em> Launch the JAR with Java 17 on Lab's PC.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Brief</td>
-                                <td>None</td>
-                            </tr>
-                            <tr>
-                                <td><strong>NFR-03</strong></td>
-                                <td>The game shall run at least 30 frames per second in each one-second sample, over a 60-second play session on the Lab's PCs, with the maximum goose count.<br><em>Test:</em> Record the machine, resolution, goose count and build before measuring.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Team</td>
-                                <td>None</td>
-                            </tr>
-                            <tr>
-                                <td><strong>NFR-04</strong></td>
-                                <td>Third-Party libraries and assets shall have licences suitable for the intended use.<br><em>Test:</em> Check each distributed library and asset against its licence and record the result in Impl1.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Brief</td>
-                                <td>None</td>
-                            </tr>
-                            <tr>
-                                <td><strong>NFR-05</strong></td>
-                                <td>A new item or hidden event shall be addable through its extension point without editing existing rule classes.<br><em>Test:</em> Add one of each as a new class, then build and run it.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Team</td>
-                                <td>None</td>
-                            </tr>
-                            <tr>
-                                <td><strong>NFR-06</strong></td>
-                                <td>Game rule classes shall not depend on libGDX graphics classes, so the rules can be unit tested without a window.<br><em>Test:</em> Inspect imports in the logic package and run its unit test without graphics.</td>
-                                <td><span class="badge badge-a1">A1</span></td>
-                                <td>Team</td>
-                                <td>None</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h4>Assumptions Awaiting Customer Confirmation</h4>
-                <ul>
-                    <li><strong>A-1:</strong> The bus station is part of the win sequence (SYS-07).</li>
-                    <li><strong>A-2:</strong> Geese peck and do not block the player (SYS-05), and the peck values are the team's design.</li>
-                    <li><strong>A-3:</strong> A full annoyance bar is a loss (SYS-14).</li>
-                    <li><strong>A-4:</strong> The goose starting count and cap (SYS-04) are the team's design.</li>
-                    <li><strong>A-5:</strong> About 90% is read as a design target for the amount of bread (SYS-15).</li>
-                    <li><strong>A-6:</strong> Pausing freezes everything, and the timer counts active play time only (SYS-02, SYS-03).</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h4>References</h4>
-                <ul class="ref-list">
-                    <li>[A] University of York (2026). <em>ENG1 Open Group Assessment 2026-27, COM000191</em>. Issued 5 October 2026. Sections 1, 1.2, 3.3.2, 3.4 and 4.3, pp. 3-4, 9-11 and 16-17.</li>
-                    <li>[P] University of York (30/09/26). <em>Product Brief: Goose Patrol</em>, pp. 1-2.</li>
-                    <li>[R] GooseGo! (14/10/26). <em>Requirements and Architecture Prerequisite</em>. Group requirements documents.</li>
-                    <li>[M] Cohort 4 Group 9 (2026). <em>Meeting minutes 1-7</em>. Meetings held on 30 September and 5, 7, 12, 14, 21 and 22 October 2026.</li>
-                    <li>[Q] Cohort 4 Group 9 (8/10/26). <em>Goose Patrol Customer Meeting Preparation Pack, Highest-priority Questions and ENG 1 Assessment Overview</em>.</li>
-                    <li>[D] GooseGo! (10/26). <em>Architecture Deliverable Draft, Architecture (Official), CRC Cards, UML Drafts</em>.</li>
-                    <li>[V] GooseGo! (10/26). <em>Game Design Slides, Method Selection and Planning, Risk Management and Mitigation</em>.</li>
-                    <li>[N] NASA (2016). <em>NASA Systems Engineering Handbook, NASA/SP-2016-6105 Rev 2</em>. Appendix C and Section 6.2.</li>
-                    <li>[G] GooseGo! (2026). <em>ENG1-Group9</em>. GitHub repository: <a href="https://github.com/Khalid-Huseyn/ENG1-Group9" target="_blank">github.com/Khalid-Huseyn/ENG1-Group9</a>.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- =========================================================
-             2. ARCHITECTURE FOLDER (Arch1.pdf)
-             ========================================================= -->
-        <div id="arch-folder" class="folder-content">
-            <div class="folder-header">
-                <h3 class="folder-title">3.0 Architecture</h3>
-                <div class="file-list">
-                    <a class="file-link" href="Arch1.pdf" target="_blank">📄 Download / View Arch1.pdf</a>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h4>3.1 Overview and Notation</h4>
-                <p>The architecture is described using <strong>UML 2.0</strong> with three diagrams: a class diagram for structure (Figure 1), a sequence diagram of the player collecting the bus ticket (Figure 2), and a state machine of the game from start to win or lose (Figure 3).</p>
-                <ul>
-                    <li><strong>Lucidchart</strong> for the class diagram: easy to understand and supports real-time multi-member collaboration.</li>
-                    <li><strong>PlantUML</strong> for the sequence diagram and state machine: text-based notation suited for version-controlled dynamic UML diagrams.</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h4>3.2 Architectural Approach</h4>
-                <p><strong>Main Principle:</strong> Game logic is decoupled from rendering and input. Game rules (annoyance level, inventory, hidden events, and win/lose conditions) reside in pure logic classes containing no graphics code (<code>REQ-NFR-06</code> / <code>REQ-NFR-07</code>), while <strong>libGDX</strong> handles Tiled map loading, assets, drawing, input, audio, and the camera.</p>
-                <ol>
-                    <li><strong>Testing:</strong> Game rules can be unit-tested without launching a graphics window.</li>
-                    <li><strong>Teamwork:</strong> Team members can develop game logic and graphics concurrently.</li>
-                    <li><strong>Extension:</strong> New items or hidden events can be added in Assessment 2 without rewriting core rule classes.</li>
-                    <li><strong>Clarity:</strong> Single-responsibility classes keep the codebase readable and traceable.</li>
-                </ol>
-            </div>
-
-            <div class="doc-section">
-                <h4>3.3 Structural Architecture (17 Classes)</h4>
-                <p><code>GameEngine</code> is the central class owning the main components and running the game loop, including <code>pauseGame()</code> and <code>resumeGame()</code> (<code>REQ-USR-02</code>, <code>REQ-SYS-02</code>). The remaining classes fall into five groups:</p>
-                <ul>
-                    <li><strong>Rules:</strong> <code>GameState</code> (win, lose, and counters), <code>Timer</code>, and <code>AnnoyanceBar</code>.</li>
-                    <li><strong>World and Entities:</strong> <code>CampusMap</code>, <code>PlayerCharacter</code> and <code>Goose</code> (both extend <code>Entity</code>), and <code>GooseHerd</code>.</li>
-                    <li><strong>Items:</strong> <code>Inventory</code>, <code>Item</code>, <code>BreadCrumbs</code>, and <code>BusTicket</code>.</li>
-                    <li><strong>Events:</strong> <code>HiddenEvent</code> and <code>LongBoiStatue</code>.</li>
-                    <li><strong>Display:</strong> <code>UserInterface</code> and <code>WaypointMarker</code>.</li>
-                </ul>
-                <p><strong>UML Relationships:</strong> Composition (<code>GameEngine</code> owns <code>GameState</code>, <code>Timer</code>, <code>AnnoyanceBar</code>, <code>CampusMap</code>, <code>PlayerCharacter</code>, <code>GooseHerd</code>, <code>UserInterface</code>, and <code>0..* HiddenEvent</code>; <code>PlayerCharacter</code> owns <code>Inventory</code>), Aggregation (<code>GooseHerd</code> groups <code>1..* Goose</code>; <code>Inventory</code> holds <code>0..* Item</code>), Inheritance (<code>PlayerCharacter</code>/<code>Goose</code> &rarr; <code>Entity</code>; <code>BreadCrumbs</code>/<code>BusTicket</code> &rarr; <code>Item</code>; <code>LongBoiStatue</code> &rarr; <code>HiddenEvent</code>), and Dependency (e.g., <code>BreadCrumbs</code> disperses <code>GooseHerd</code>; <code>Goose</code> raises <code>AnnoyanceBar</code>).</p>
-            </div>
-
-            <div class="doc-section">
-                <h4>3.4 Behavioural Architecture</h4>
-                <p><strong>Collecting the Bus Ticket (Sequence Diagram — Figure 2):</strong></p>
-                <ol>
-                    <li>The player moves <code>PlayerCharacter</code> (<code>REQ-USR-01</code>). On each update, <code>GameEngine</code> asks <code>LongBoiStatue</code> (a <code>HiddenEvent</code>) to run <code>checkTrigger(PlayerCharacter)</code> (<code>REQ-SYS-13</code>) and checks via <code>GooseHerd</code> whether all geese are dispersed (<code>REQ-SYS-07</code>).</li>
-                    <li>If the player is at the trigger point, the event has not been used, and all geese are dispersed, <code>execute()</code> runs <code>giveItem()</code>, creating and returning the <code>BusTicket</code> (<code>REQ-SYS-16</code>).</li>
-                    <li><code>GameEngine</code> passes the ticket to <code>PlayerCharacter</code>, which stores it via <code>Inventory.addItem(BusTicket)</code>.</li>
-                </ol>
-                <p><strong>State Machine of the Game (Figure 3):</strong></p>
-                <ul>
-                    <li>Starts in <strong>Paused</strong> (freezes <code>Timer</code> and geese); transitions between <strong>Paused</strong> and <strong>Running</strong> via <code>resume</code> / <code>pause</code> (<code>REQ-USR-02</code>, <code>REQ-SYS-02</code>).</li>
-                    <li>Transitions to <strong>Won</strong> when <code>GameState.checkWinCondition()</code> is true (all geese dispersed and player holds <code>BusTicket</code>, <code>REQ-SYS-07</code>).</li>
-                    <li>Transitions to <strong>Lost</strong> when <code>Timer</code> expires or <code>AnnoyanceBar</code> is full (<code>REQ-SYS-14</code>).</li>
-                </ul>
-            </div>
-
-            <div class="doc-section">
-                <h4>3.5 Justification and Traceability</h4>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Component (Figure 1)</th>
-                                <th>Responsibility</th>
-                                <th>Why This Design</th>
-                                <th>Requirements</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>GameEngine</strong></td>
-                                <td>Runs the game loop, pause and resume, and owns the main parts</td>
-                                <td>One loop owner gives one place to enforce pause. Rejected: direct class-to-class calls, which repeat pause logic.</td>
-                                <td>REQ-USR-02, REQ-SYS-02</td>
-                            </tr>
-                            <tr>
-                                <td><strong>GameState</strong></td>
-                                <td>Win and lose checks</td>
-                                <td>Keeps end rules out of the loop, so they are testable and easy to change. Win check enforces dispersing all geese before the ticket.</td>
-                                <td>REQ-SYS-07, REQ-SYS-08, REQ-SYS-14</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Timer</strong></td>
-                                <td>Five-minute countdown that can be paused</td>
-                                <td>Pausing freezes it with one call, and it is testable without graphics.</td>
-                                <td>REQ-SYS-03</td>
-                            </tr>
-                            <tr>
-                                <td><strong>AnnoyanceBar</strong></td>
-                                <td>Level that rises when a goose pecks, and <code>isFull()</code></td>
-                                <td>Gives pecking a measurable consequence and the lose check one value to read.</td>
-                                <td>REQ-USR-07, REQ-SYS-05</td>
-                            </tr>
-                            <tr>
-                                <td><strong>CampusMap</strong></td>
-                                <td>Defines which tiles are walkable</td>
-                                <td>Movement asks <code>isTileWalkable(x, y)</code>, so it does not depend on the map file or rendering.</td>
-                                <td>REQ-SYS-01</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Entity, PlayerCharacter, Goose</strong></td>
-                                <td>Shared position, player movement, and individual goose behaviour</td>
-                                <td><code>Entity</code> holds what both share. <code>move(dx, dy)</code> is the only place the player's position changes.</td>
-                                <td>REQ-USR-01</td>
-                            </tr>
-                            <tr>
-                                <td><strong>GooseHerd</strong></td>
-                                <td>Moves and disperses the geese as a group</td>
-                                <td>Group behaviour stays in one place instead of every item looping over geese. Rejected: one object per goose with no herd.</td>
-                                <td>REQ-SYS-04, REQ-SYS-05</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Inventory, Item</strong></td>
-                                <td>Holds and uses items</td>
-                                <td><code>Item</code> is the extension point: a new item is a new subclass. Capacity is a configurable value.</td>
-                                <td>REQ-USR-04, REQ-SYS-06, REQ-SYS-11, REQ-NFR-05</td>
-                            </tr>
-                            <tr>
-                                <td><strong>BreadCrumbs, BusTicket</strong></td>
-                                <td>Bread used to disperse geese, and bus ticket to win</td>
-                                <td>Both are items, so they share the same inventory and <code>use()</code> path.</td>
-                                <td>REQ-SYS-15, REQ-SYS-16</td>
-                            </tr>
-                            <tr>
-                                <td><strong>HiddenEvent, LongBoiStatue</strong></td>
-                                <td>Triggers at a point, and the statue that gives the ticket</td>
-                                <td><code>HiddenEvent</code> is the second extension point, so new events are new subclasses.</td>
-                                <td>REQ-USR-06, REQ-SYS-13, REQ-SYS-16, REQ-SYS-07</td>
-                            </tr>
-                            <tr>
-                                <td><strong>UserInterface, WaypointMarker</strong></td>
-                                <td>Shows the timer, annoyance bar, inventory, and waypoint</td>
-                                <td>Only reads values from the logic classes, and libGDX draws them.</td>
-                                <td>REQ-USR-10, REQ-SYS-09, REQ-SYS-17</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h4>3.6 Design Process, Evolution and Evidence</h4>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Version</th>
-                                <th>Date</th>
-                                <th>Main Changes and Reasons</th>
-                                <th>Evidence Link</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Concept Design</strong></td>
-                                <td>19.10.2026</td>
-                                <td>First list of classes and responsibilities.</td>
-                                <td><a href="#architecture-concepts-folder">View Architecture Concepts Folder</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Sketch Draft</strong></td>
-                                <td>25.10.2026</td>
-                                <td>First class diagram built from hand-drawn sketches, with <code>GameEngine</code> as the root.</td>
-                                <td><a href="Concepts%20and%20Early%20Iterations/Architecture/UML-1.jpg" target="_blank">UML-1</a>, <a href="Concepts%20and%20Early%20Iterations/Architecture/UML-2.jpg" target="_blank">UML-2</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Draft 2</strong></td>
-                                <td>30.10.2026</td>
-                                <td>Added <code>GameState</code>, <code>AnnoyanceBar</code>, <code>LongBoiStatue</code>, and the ticket. Removed the link between <code>Goose</code> and <code>Items</code>; geese owned by <code>GooseHerd</code>.</td>
-                                <td><a href="Concepts%20and%20Early%20Iterations/Architecture/snake_case%20ENG1%20Group%209%20UML%20LucidChart.png" target="_blank">Snake Case UML Draft</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Draft 3 (Figure 1)</strong></td>
-                                <td>04.11.2026</td>
-                                <td>Switched to PascalCase for consistency. Added <code>Entity</code>, <code>Inventory</code>, and <code>UserInterface</code>. Added <code>allDispersed()</code> check after customer confirmation.</td>
-                                <td><a href="Concepts%20and%20Early%20Iterations/Architecture/PascalCase%20ENG1%20Group%209%20UML%20-%20Page%201.png" target="_blank">PascalCase UML</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h4>References</h4>
-                <ul class="ref-list">
-                    <li>Lucid Software Inc. (2024). <em>Lucidchart Diagramming Software</em>. Available at: <a href="https://www.lucidchart.com" target="_blank">https://www.lucidchart.com</a>.</li>
-                    <li>Object Management Group (2017). <em>OMG Unified Modeling Language (OMG UML), Version 2.5.1</em>. Available at: <a href="https://www.omg.org/spec/UML/2.5.1" target="_blank">https://www.omg.org/spec/UML/2.5.1</a>.</li>
-                    <li>PlantUML (n.d.). <em>PlantUML Language Reference Guide</em>. Available at: <a href="https://plantuml.com/guide" target="_blank">https://plantuml.com/guide</a>.</li>
-                    <li>University of York (2024). <em>Software Engineering: Architecture and Design (Week 5 Lecture Slides)</em>. Department of Computer Science, University of York.</li>
-                    <li>Zechner, M. and Green, A. (2024). <em>libGDX Documentation and API Reference</em>. Available at: <a href="https://libgdx.com/documentation/" target="_blank">https://libgdx.com/documentation/</a>.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- =========================================================
-             3. METHOD SELECTION & PLANNING FOLDER (Plan1.pdf)
-             ========================================================= -->
-        <div id="plan-folder" class="folder-content">
-            <div class="folder-header">
-                <h3 class="folder-title">4.0 Method Selection &amp; Planning</h3>
-                <div class="file-list">
-                    <a class="file-link" href="Plan1.pdf" target="_blank">📄 Download / View Plan1.pdf</a>
-                </div>
-            </div>
-            <div class="doc-section">
-                <p>Click <strong>Download / View Plan1.pdf</strong> above to access the full Method Selection and Planning report. Weekly project plan snapshots can also be linked here.</p>
-            </div>
-        </div>
-
-        <!-- =========================================================
-             4. RISK MANAGEMENT AND MITIGATION FOLDER (Risk1.pdf)
-             ========================================================= -->
-        <div id="risk-folder" class="folder-content">
-            <div class="folder-header">
-                <h3 class="folder-title">5.0 Risk Management and Mitigation</h3>
-                <div class="file-list">
-                    <a class="file-link" href="Risk1.pdf" target="_blank">📄 Download / View Risk1.pdf</a>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h4>5.1 Risk Management Process</h4>
-                <p>Our team follows a simple four-step process suitable for a small, non-critical software project with a fixed deadline:</p>
-                <ol>
-                    <li><strong>Identify:</strong> Risks are identified through team discussions and categorised as <em>Project</em>, <em>Technology</em>, or <em>Product</em> risks.</li>
-                    <li><strong>Assess:</strong> Each risk is rated for Likelihood (L) and Impact (I).</li>
-                    <li><strong>Plan:</strong> The team agrees mitigation measures that limit impact, avoid single-person dependencies, and assign clear owner(s).</li>
-                    <li><strong>Monitor:</strong> Owners reassess their risks, and the full register is reviewed at each weekly meeting to close resolved risks, update ratings, and add new ones.</li>
-                </ol>
-
-                <p><strong>Risk Rating Scale:</strong> Both Likelihood and Impact use a 3-level scale: Low (1), Medium (2), or High (3). <strong>Rating = Likelihood &times; Impact</strong> (1–2 = Minor, 3–4 = Moderate, 6–9 = Serious).</p>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Level</th>
-                                <th>Likelihood</th>
-                                <th>Impact</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Low (1)</strong></td>
-                                <td>Unlikely to happen during the project</td>
-                                <td>Small delay or rework, no effect on marks</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Medium (2)</strong></td>
-                                <td>May happen once</td>
-                                <td>Noticeable delay or loss of quality in one deliverable</td>
-                            </tr>
-                            <tr>
-                                <td><strong>High (3)</strong></td>
-                                <td>Expected to happen or already likely</td>
-                                <td>Missed deadline, or a failed or incomplete deliverable</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h4>5.2 Risk Register</h4>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Risk ID</th>
-                                <th>Type</th>
-                                <th>Risk Description</th>
-                                <th>L</th>
-                                <th>I</th>
-                                <th>Rating</th>
-                                <th>Mitigation Strategy</th>
-                                <th>Owner(s)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>R01</strong></td>
-                                <td>Project</td>
-                                <td>Uneven workload, and critical tasks depend on one person.</td>
-                                <td>Med (2)</td>
-                                <td>High (3)</td>
-                                <td><span class="badge badge-serious">6 (Serious)</span></td>
-                                <td>Split high-priority tasks across at least two people. Weekly workload check-ins. Task allocation visible in GitHub issues. Escalate unresolved inequity to module lecturers.</td>
-                                <td>Hayden Chew</td>
-                            </tr>
-                            <tr>
-                                <td><strong>R02</strong></td>
-                                <td>Project</td>
-                                <td>Not enough time to implement the Assessment 1 features: 2 initial items, 2 hidden events, timer, and item-usage counter.</td>
-                                <td>Med (2)</td>
-                                <td>High (3)</td>
-                                <td><span class="badge badge-serious">6 (Serious)</span></td>
-                                <td>Apply KISS. Build the minimal working core before polish. Weekly plan snapshots. Internal deadlines several days before submission.</td>
-                                <td>Khalid Huseyn</td>
-                            </tr>
-                            <tr>
-                                <td><strong>R03</strong></td>
-                                <td>Project</td>
-                                <td>Miscommunication gives team members inconsistent understanding of the Goose Patrol requirements.</td>
-                                <td>Med (2)</td>
-                                <td>Med (2)</td>
-                                <td><span class="badge badge-moderate">4 (Moderate)</span></td>
-                                <td>Trace design decisions to the product brief. Record decisions with dates. Hold requirements reviews. Cross-reference work to requirement IDs.</td>
-                                <td>Charlie Murrell</td>
-                            </tr>
-                            <tr>
-                                <td><strong>R04</strong></td>
-                                <td>Project</td>
-                                <td>The customer clarifies or changes requirements late.</td>
-                                <td>Med (2)</td>
-                                <td>Med (2)</td>
-                                <td><span class="badge badge-moderate">4 (Moderate)</span></td>
-                                <td>Ask questions early and record replies with dates. Keep requirement IDs stable. Re-check affected documents after each reply.</td>
-                                <td>Hayden Chew, Khalid Huseyn</td>
-                            </tr>
-                            <tr>
-                                <td><strong>R05</strong></td>
-                                <td>Technology</td>
-                                <td>Third-party libraries or assets have licences incompatible with possible commercial marketing.</td>
-                                <td>Med (2)</td>
-                                <td>Med (2)</td>
-                                <td><span class="badge badge-moderate">4 (Moderate)</span></td>
-                                <td>Keep a list of dependencies and licences. Reject restrictive licences. Review the licence before adding any resource.</td>
-                                <td>Theo Shaykhulov</td>
-                            </tr>
-                            <tr>
-                                <td><strong>R06</strong></td>
-                                <td>Technology</td>
-                                <td>Team members build with different Java versions, so the build fails.</td>
-                                <td>Med (2)</td>
-                                <td>Med (2)</td>
-                                <td><span class="badge badge-moderate">4 (Moderate)</span></td>
-                                <td>Fix Java 17 in the Gradle files. Each member confirms the game runs on their machine.</td>
-                                <td>Theo Shaykhulov</td>
-                            </tr>
-                            <tr>
-                                <td><strong>R07</strong></td>
-                                <td>Technology</td>
-                                <td>Git merge conflicts corrupt code or break the build.</td>
-                                <td>High (3)</td>
-                                <td>Med (2)</td>
-                                <td><span class="badge badge-serious">6 (Serious)</span></td>
-                                <td>Branch and pull-request workflow. Peer review before merge. Build locally before committing; verify JAR builds correctly.</td>
-                                <td>Khalid Huseyn, Theo Shaykhulov</td>
-                            </tr>
-                            <tr>
-                                <td><strong>R08</strong></td>
-                                <td>Technology</td>
-                                <td>The executable JAR does not run on another machine.</td>
-                                <td>Med (2)</td>
-                                <td>High (3)</td>
-                                <td><span class="badge badge-serious">6 (Serious)</span></td>
-                                <td>Build the JAR early and test it on a different machine each week.</td>
-                                <td>Khalid Huseyn, Theo Shaykhulov</td>
-                            </tr>
-                            <tr>
-                                <td><strong>R09</strong></td>
-                                <td>Product</td>
-                                <td>Code, tests, and documents do not link back to the requirements.</td>
-                                <td>Med (2)</td>
-                                <td>Med (2)</td>
-                                <td><span class="badge badge-moderate">4 (Moderate)</span></td>
-                                <td>Use requirement IDs in code comments, tests, and deliverables. Peer review all changes.</td>
-                                <td>Khalid Huseyn, Hayden Chew, Charlie Murrell</td>
-                            </tr>
-                            <tr>
-                                <td><strong>R10</strong></td>
-                                <td>Product</td>
-                                <td>Inventory items or hidden events malfunction, breaking core gameplay.</td>
-                                <td>Med (2)</td>
-                                <td>Med (2)</td>
-                                <td><span class="badge badge-moderate">4 (Moderate)</span></td>
-                                <td>JUnit tests for item use and event triggers. Manual tests for GUI behaviour. Test after every merge.</td>
-                                <td>Khalid Huseyn, Theo Shaykhulov</td>
-                            </tr>
-                            <tr>
-                                <td><strong>R11</strong></td>
-                                <td>Project</td>
-                                <td>Fewer team members are active than planned, so the work allocated cannot all be completed by the people contributing.</td>
-                                <td>High (3)</td>
-                                <td>High (3)</td>
-                                <td><span class="badge badge-serious">9 (Serious)</span></td>
-                                <td>Prioritise work by marks: finish documents and Assessment 1 core features first. Reassign deliverable owners to active members. Keep to KISS and defer extras. Keep a dated record of contributions (commits, minutes, messages). Inform lead lecturers early if required.</td>
-                                <td>Hayden Chew, Khalid Huseyn</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="doc-section">
-                <h4>References</h4>
-                <ul class="ref-list">
-                    <li>University of York (2024). <em>Software Engineering: Project planning and risk management (Week 2 Lecture Slides)</em>. Department of Computer Science, University of York.</li>
-                    <li>GooseGo! (2026). <em>ENG1-Group9</em>. GitHub repository: <a href="https://github.com/Khalid-Huseyn/ENG1-Group9" target="_blank">github.com/Khalid-Huseyn/ENG1-Group9</a>.</li>
-                    <li>Cohort 4 Group 9 (8/10/26). <em>Goose Patrol Customer Meeting Preparation Pack, Highest-priority Questions and ENG 1 Assessment Overview</em>.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- =========================================================
-             5. IMPLEMENTATION FOLDER (Impl1.pdf + JAR + Repo)
-             ========================================================= -->
-        <div id="impl-folder" class="folder-content">
-            <div class="folder-header">
-                <h3 class="folder-title">6.0 Implementation</h3>
-                <div class="file-list">
-                    <a class="file-link" href="Impl1.pdf" target="_blank">📄 Download / View Impl1.pdf</a>
-                    <a class="file-link" href="GoosePatrol.jar" target="_blank">🎮 Executable Game JAR</a>
-                    <a class="file-link" href="https://github.com/Khalid-Huseyn/ENG1-Group9" target="_blank">💻 GitHub Repository</a>
-                </div>
-            </div>
-            <div class="doc-section">
-                <p>Access the documented Java 17 source code via the GitHub repository, download the standalone executable JAR, or open <strong>Impl1.pdf</strong> for the third-party library licence review and implementation status.</p>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        function openFolder(folderId) {
-            document.querySelectorAll('.folder-content').forEach(el => {
-                el.classList.remove('show');
-            });
-            document.querySelectorAll('.folder-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            const targetFolder = document.getElementById(folderId);
-            const targetBtn = document.querySelector(`.folder-btn[data-target="${folderId}"]`);
-            if (targetFolder) {
-                targetFolder.classList.add('show');
-            }
-            if (targetBtn) {
-                targetBtn.classList.add('active');
-            }
-        }
-
-        function toggleFolder(folderId) {
-            const folder = document.getElementById(folderId);
-            const isAlreadyOpen = folder.classList.contains('show');
-
-            if (isAlreadyOpen) {
-                folder.classList.remove('show');
-                const btn = document.querySelector(`.folder-btn[data-target="${folderId}"]`);
-                if (btn) btn.classList.remove('active');
-                history.pushState(null, null, window.location.pathname);
-            } else {
-                openFolder(folderId);
-                history.pushState(null, null, '#' + folderId);
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const hash = window.location.hash.substring(1);
-            if (hash && document.getElementById(hash)) {
-                openFolder(hash);
-            }
-        });
-
-        window.addEventListener('hashchange', () => {
-            const hash = window.location.hash.substring(1);
-            if (hash && document.getElementById(hash)) {
-                openFolder(hash);
-            }
-        });
-    </script>
-
-</body>
-</html>
+            <button class="folder-btn" data
