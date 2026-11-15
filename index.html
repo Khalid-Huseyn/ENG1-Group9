@@ -87,44 +87,12 @@
             justify-content: space-between;
             align-items: center;
             gap: 12px;
-            border-bottom: 1px solid #dee2e6;
-            padding-bottom: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .folder-title {
             margin: 0;
             font-size: 21px;
-        }
-
-        .doc-section {
-            margin-bottom: 26px;
-        }
-
-        .doc-section h4 {
-            margin: 0 0 10px 0;
-            font-size: 17px;
-            color: #0056b3;
-            border-left: 4px solid #007bff;
-            padding-left: 10px;
-        }
-
-        .doc-section p,
-        .doc-section ul,
-        .doc-section ol {
-            margin: 0 0 12px 0;
-            font-size: 14px;
-        }
-
-        .doc-section li {
-            margin-bottom: 6px;
-        }
-
-        code {
-            background-color: #f1f3f5;
-            padding: 2px 5px;
-            border-radius: 4px;
-            font-size: 13px;
         }
 
         /* Action Buttons inside Deliverables */
@@ -155,93 +123,12 @@
             border-color: #9ec5fe;
         }
 
-        .pdf-embed-box {
-            display: none;
-            margin-bottom: 22px;
+        .pdf-viewer {
+            width: 100%;
+            height: 750px;
             border: 1px solid #dee2e6;
             border-radius: 6px;
-            overflow: hidden;
-            background-color: #f8f9fa;
-        }
-
-        .pdf-embed-box.show {
             display: block;
-        }
-
-        .pdf-embed-box iframe {
-            width: 100%;
-            height: 620px;
-            border: none;
-            display: block;
-        }
-
-        /* Data Tables */
-        .table-wrapper {
-            overflow-x: auto;
-            margin-bottom: 18px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13.5px;
-            background-color: #fff;
-        }
-
-        th, td {
-            border: 1px solid #dee2e6;
-            padding: 10px 12px;
-            text-align: left;
-            vertical-align: top;
-        }
-
-        th {
-            background-color: #f1f3f5;
-            font-weight: 600;
-            color: #212529;
-        }
-
-        tr:nth-child(even) td {
-            background-color: #f8f9fa;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .badge-a1 {
-            background-color: #d1e7dd;
-            color: #0f5132;
-        }
-
-        .badge-a2 {
-            background-color: #fff3cd;
-            color: #664d03;
-        }
-
-        .badge-moderate {
-            background-color: #fff3cd;
-            color: #664d03;
-        }
-
-        .badge-serious {
-            background-color: #f8d7da;
-            color: #842029;
-        }
-
-        .ref-list {
-            font-size: 13px;
-            color: #495057;
-            padding-left: 20px;
-        }
-
-        .ref-list li {
-            margin-bottom: 6px;
         }
 
         /* Image Grid */
@@ -297,4 +184,192 @@
     <section>
         <h2 class="section-heading">Design Evidence &amp; Early Iterations</h2>
         <nav class="menu-bar">
-            <button class="folder-btn" data
+            <button class="folder-btn" data-target="architecture-concepts-folder" onclick="toggleFolder('architecture-concepts-folder')">
+                📁 Architecture Concepts
+            </button>
+        </nav>
+
+        <div id="architecture-concepts-folder" class="folder-content">
+            <div class="folder-header">
+                <h3 class="folder-title">Concepts and Early Iterations / Architecture</h3>
+            </div>
+            <div class="image-grid">
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/GROUP-PROJECT%20UML%20DRAFT.png" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/GROUP-PROJECT%20UML%20DRAFT.png" alt="GROUP-PROJECT UML DRAFT">
+                    </a>
+                    <span>GROUP-PROJECT UML DRAFT</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/PascalCase%20ENG1%20Group%209%20UML%20-%20Page%201.png" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/PascalCase%20ENG1%20Group%209%20UML%20-%20Page%201.png" alt="PascalCase ENG1 Group 9 UML - Page 1">
+                    </a>
+                    <span>PascalCase ENG1 Group 9 UML - Page 1</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/snake_case%20ENG1%20Group%209%20UML%20LucidChart.png" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/snake_case%20ENG1%20Group%209%20UML%20LucidChart.png" alt="snake_case ENG1 Group 9 UML LucidChart">
+                    </a>
+                    <span>snake_case ENG1 Group 9 UML LucidChart</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%201.png" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%201.png" alt="UML Sketch 1">
+                    </a>
+                    <span>UML Sketch 1</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%202.png" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/UML%20Sketch%202.png" alt="UML Sketch 2">
+                    </a>
+                    <span>UML Sketch 2</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/UML-1.jpg" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/UML-1.jpg" alt="UML-1">
+                    </a>
+                    <span>UML-1</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/UML-2.jpg" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/UML-2.jpg" alt="UML-2">
+                    </a>
+                    <span>UML-2</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Deliverables Section -->
+    <section id="deliverables">
+        <h2 class="section-heading">Deliverables</h2>
+
+        <nav class="menu-bar">
+            <button class="folder-btn" data-target="req-folder" onclick="toggleFolder('req-folder')">
+                📁 Requirement
+            </button>
+            <button class="folder-btn" data-target="arch-folder" onclick="toggleFolder('arch-folder')">
+                📁 Architecture
+            </button>
+            <button class="folder-btn" data-target="plan-folder" onclick="toggleFolder('plan-folder')">
+                📁 Method Selection &amp; Planning
+            </button>
+            <button class="folder-btn" data-target="risk-folder" onclick="toggleFolder('risk-folder')">
+                📁 Risk Management and Mitigation
+            </button>
+            <button class="folder-btn" data-target="impl-folder" onclick="toggleFolder('impl-folder')">
+                📁 Implementation
+            </button>
+        </nav>
+
+        <!-- 1. REQUIREMENT -->
+        <div id="req-folder" class="folder-content">
+            <div class="folder-header">
+                <h3 class="folder-title">Requirement</h3>
+                <div class="file-list">
+                    <a class="file-link" href="Req1.pdf" target="_blank">📄 Download / Open Req1.pdf</a>
+                </div>
+            </div>
+            <iframe class="pdf-viewer" src="Req1.pdf" title="Req1.pdf"></iframe>
+        </div>
+
+        <!-- 2. ARCHITECTURE -->
+        <div id="arch-folder" class="folder-content">
+            <div class="folder-header">
+                <h3 class="folder-title">Architecture</h3>
+                <div class="file-list">
+                    <a class="file-link" href="Arch1.pdf" target="_blank">📄 Download / Open Arch1.pdf</a>
+                </div>
+            </div>
+            <iframe class="pdf-viewer" src="Arch1.pdf" title="Arch1.pdf"></iframe>
+        </div>
+
+        <!-- 3. METHOD SELECTION & PLANNING -->
+        <div id="plan-folder" class="folder-content">
+            <div class="folder-header">
+                <h3 class="folder-title">Method Selection &amp; Planning</h3>
+                <div class="file-list">
+                    <a class="file-link" href="Plan1.pdf" target="_blank">📄 Download / Open Plan1.pdf</a>
+                </div>
+            </div>
+            <iframe class="pdf-viewer" src="Plan1.pdf" title="Plan1.pdf"></iframe>
+        </div>
+
+        <!-- 4. RISK MANAGEMENT AND MITIGATION -->
+        <div id="risk-folder" class="folder-content">
+            <div class="folder-header">
+                <h3 class="folder-title">Risk Management and Mitigation</h3>
+                <div class="file-list">
+                    <a class="file-link" href="Risk1.pdf" target="_blank">📄 Download / Open Risk1.pdf</a>
+                </div>
+            </div>
+            <iframe class="pdf-viewer" src="Risk1.pdf" title="Risk1.pdf"></iframe>
+        </div>
+
+        <!-- 5. IMPLEMENTATION -->
+        <div id="impl-folder" class="folder-content">
+            <div class="folder-header">
+                <h3 class="folder-title">Implementation</h3>
+                <div class="file-list">
+                    <a class="file-link" href="Impl1.pdf" target="_blank">📄 Download / Open Impl1.pdf</a>
+                    <a class="file-link" href="GoosePatrol.jar" target="_blank">🎮 Executable Game JAR</a>
+                    <a class="file-link" href="https://github.com/Khalid-Huseyn/ENG1-Group9" target="_blank">💻 GitHub Repository</a>
+                </div>
+            </div>
+            <iframe class="pdf-viewer" src="Impl1.pdf" title="Impl1.pdf"></iframe>
+        </div>
+    </section>
+
+    <script>
+        function openFolder(folderId) {
+            document.querySelectorAll('.folder-content').forEach(el => {
+                el.classList.remove('show');
+            });
+            document.querySelectorAll('.folder-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            const targetFolder = document.getElementById(folderId);
+            const targetBtn = document.querySelector(`.folder-btn[data-target="${folderId}"]`);
+            if (targetFolder) {
+                targetFolder.classList.add('show');
+            }
+            if (targetBtn) {
+                targetBtn.classList.add('active');
+            }
+        }
+
+        function toggleFolder(folderId) {
+            const folder = document.getElementById(folderId);
+            const isAlreadyOpen = folder.classList.contains('show');
+
+            if (isAlreadyOpen) {
+                folder.classList.remove('show');
+                const btn = document.querySelector(`.folder-btn[data-target="${folderId}"]`);
+                if (btn) btn.classList.remove('active');
+                history.pushState(null, null, window.location.pathname);
+            } else {
+                openFolder(folderId);
+                history.pushState(null, null, '#' + folderId);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                openFolder(hash);
+            }
+        });
+
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                openFolder(hash);
+            }
+        });
+    </script>
+
+</body>
+</html>
