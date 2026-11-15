@@ -24,6 +24,7 @@ public class Main extends ApplicationAdapter {
     private static final float TIME_STEP = 1f / 60f;
 
     private UI ui;
+    private final GameEngine gameEngine = new GameEngine();
     private World world;
     private Body longBoiBody;
     private Player player;
@@ -33,7 +34,6 @@ public class Main extends ApplicationAdapter {
     private FitViewport viewport;
     private SpriteBatch batch;
     private BitmapFont font;
-    private boolean paused = false;
 
     private final float statueX = 227f;
     private final float statueY = 305f;
@@ -76,51 +76,74 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            paused = !paused;}
+            if (gameEngine.isPaused()) {
+                gameEngine.resumeGame();
+            } else {
+                gameEngine.pauseGame();
+            }
+        }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
-            player.takeDamage(10);}
-
+        boolean paused = gameEngine.isPaused();
         if (!paused) {
-            player.input();
-            spawnTimer += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
-
-            if (spawnTimer >= 3f && npcs.size() < 10) {spawnNPC();spawnTimer = 0f;}
-            for (NPC npc : npcs) {npc.chase(player.getCenterX(), player.getCenterY() - 8f);}
-
-            accumulator += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
-            while (accumulator >= 1f / 60f) {world.step(1f / 60f, 6, 2);accumulator -= 1f / 60f;}
-
-            player.update();
-
-            for (NPC npc : npcs) {npc.update();}
-
-            updateCamera();
-            batch.setProjectionMatrix(viewport.getCamera().combined);}
-
+            if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
+                player.takeDamage(10);
+            }
+            updateGame();
+        }
 
         ScreenUtils.clear(0, 0, 0, 1);
         viewport.apply();
+        batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
         batch.draw(map, 0, 0);
-        for (NPC npc : npcs) {npc.draw(batch);}
+        for (NPC npc : npcs) {
+            npc.draw(batch);
+        }
         player.draw(batch);
-        font.draw(batch, "(" + player.getX() + "," + player.getY() + ")",
-            viewport.getCamera().position.x - viewport.getWorldWidth() / 2f + 10f,
-            viewport.getCamera().position.y + viewport.getWorldHeight() / 2f - 10f);
 
-        if (paused) {batch.draw(pauseScreen,
-                viewport.getCamera().position.x - viewport.getWorldWidth() / 2f,
-                viewport.getCamera().position.y - viewport.getWorldHeight() / 2f,
-                viewport.getWorldWidth(),
-                viewport.getWorldHeight());}
-        if (!paused) {drawInteraction();}
+        float left = viewport.getCamera().position.x - viewport.getWorldWidth() / 2f;
+        float top = viewport.getCamera().position.y + viewport.getWorldHeight() / 2f;
+        if (paused) {
+            batch.draw(pauseScreen, left, top - viewport.getWorldHeight(),
+                    viewport.getWorldWidth(), viewport.getWorldHeight());
+            font.draw(batch, "Paused - Press Esc to resume", left + 10f, top - 30f);
+        } else {
+            font.draw(batch, "(" + player.getX() + "," + player.getY() + ")", left + 10f, top - 10f);
+            drawInteraction();
+        }
 
         batch.end();
         debugRenderer.render(world, viewport.getCamera().combined.cpy().scl(PPM));
-        ui.render();}
+        ui.render();
+    }
+
+    private void updateGame() {
+        player.input();
+        spawnTimer += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
+
+        if (spawnTimer >= 3f && npcs.size() < 10) {
+            spawnNPC();
+            spawnTimer = 0f;
+        }
+        for (NPC npc : npcs) {
+            npc.chase(player.getCenterX(), player.getCenterY() - 8f);
+        }
+
+        accumulator += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
+        while (accumulator >= TIME_STEP) {
+            world.step(TIME_STEP, 6, 2);
+            accumulator -= TIME_STEP;
+        }
+
+        player.update();
+
+        for (NPC npc : npcs) {
+            npc.update();
+        }
+
+        updateCamera();
+    }
 
     private void spawnNPC() {
         float angle = MathUtils.random(0f, MathUtils.PI2);
@@ -137,15 +160,18 @@ public class Main extends ApplicationAdapter {
         float cameraX = viewport.getCamera().position.x;
         float cameraY = viewport.getCamera().position.y;
 
-
         if (playerX > cameraX + DEAD_ZONE_W_H / 2f) {
-            cameraX = playerX - DEAD_ZONE_W_H / 2f;}
+            cameraX = playerX - DEAD_ZONE_W_H / 2f;
+        }
         if (playerX < cameraX - DEAD_ZONE_W_H / 2f) {
-            cameraX = playerX + DEAD_ZONE_W_H / 2f;}
+            cameraX = playerX + DEAD_ZONE_W_H / 2f;
+        }
         if (playerY > cameraY + DEAD_ZONE_W_H / 2f) {
-            cameraY = playerY - DEAD_ZONE_W_H / 2f;}
+            cameraY = playerY - DEAD_ZONE_W_H / 2f;
+        }
         if (playerY < cameraY - DEAD_ZONE_W_H / 2f) {
-            cameraY = playerY + DEAD_ZONE_W_H / 2f;}
+            cameraY = playerY + DEAD_ZONE_W_H / 2f;
+        }
 
         viewport.getCamera().position.set(cameraX, cameraY, 0);
 
@@ -169,20 +195,23 @@ public class Main extends ApplicationAdapter {
         nearDuck = dx * dx + dy * dy <= 22f * 22f;
 
         if (nearDuck && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            inspectedDuck = !inspectedDuck;}
+            inspectedDuck = !inspectedDuck;
+        }
         if (nearDuck) {
             String message = inspectedDuck
-                ? "Help me pass my exam Long Boi!"
-                : "Press E to interact";
-            font.draw(batch, message, 10, map.getHeight() - 10);}
-        else {
-            inspectedDuck = false;}
+                    ? "Help me pass my exam Long Boi!"
+                    : "Press E to interact";
+            font.draw(batch, message, 10, map.getHeight() - 10);
+        } else {
+            inspectedDuck = false;
+        }
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, false);
-        ui.resize(width, height);}
+        ui.resize(width, height);
+    }
 
     @Override
     public void dispose() {
