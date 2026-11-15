@@ -23,14 +23,17 @@ public class Main extends ApplicationAdapter {
     private static final float PPM = 32f;
     private static final float TIME_STEP = 1f / 60f;
 
+    private UI ui;
     private World world;
     private Body longBoiBody;
     private Player player;
     private Texture map;
+    private Texture pauseScreen;
     private Box2DDebugRenderer debugRenderer;
     private FitViewport viewport;
     private SpriteBatch batch;
     private BitmapFont font;
+    private boolean paused = false;
 
     private final float statueX = 227f;
     private final float statueY = 305f;
@@ -58,48 +61,62 @@ public class Main extends ApplicationAdapter {
 
         npcTexture = new Texture(Gdx.files.internal("map/npcDuckRed.png"));
         npcTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-
+        pauseScreen = new Texture(Gdx.files.internal("map/PAUSED.png"));
+        pauseScreen.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         spawnNPC();
 
         debugRenderer = new Box2DDebugRenderer();
         viewport = new FitViewport(320f, 240f);
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         viewport.getCamera().position.set(player.getCenterX(), player.getCenterY(), 0);
+
+        ui = new UI();
     }
 
     @Override
     public void render() {
-        player.input();
-        spawnTimer += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
 
-        if (spawnTimer >= 3f && npcs.size() < 10) {spawnNPC();spawnTimer = 0f;}
-        for (NPC npc : npcs) {npc.chase(player.getCenterX(), player.getCenterY() - 8f);}
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            paused = !paused;}
 
-        accumulator += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
-        while (accumulator >= 1f / 60f) {world.step(1f / 60f, 6, 2);accumulator -= 1f / 60f;}
+        if (!paused) {
+            player.input();
+            spawnTimer += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
 
-        player.update();
+            if (spawnTimer >= 3f && npcs.size() < 10) {spawnNPC();spawnTimer = 0f;}
+            for (NPC npc : npcs) {npc.chase(player.getCenterX(), player.getCenterY() - 8f);}
 
-        for (NPC npc : npcs) {npc.update();}
+            accumulator += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
+            while (accumulator >= 1f / 60f) {world.step(1f / 60f, 6, 2);accumulator -= 1f / 60f;}
 
-        updateCamera();
+            player.update();
+
+            for (NPC npc : npcs) {npc.update();}
+
+            updateCamera();
+            batch.setProjectionMatrix(viewport.getCamera().combined);}
+
 
         ScreenUtils.clear(0, 0, 0, 1);
         viewport.apply();
-        batch.setProjectionMatrix(viewport.getCamera().combined);
-
         batch.begin();
         batch.draw(map, 0, 0);
         for (NPC npc : npcs) {npc.draw(batch);}
         player.draw(batch);
-        drawInteraction();
-        float left = viewport.getCamera().position.x - viewport.getWorldWidth() / 2f;
-        float top = viewport.getCamera().position.y + viewport.getWorldHeight() / 2f;
-        font.draw(batch, "(" + player.getX() + "," + player.getY() + ")", left + 10f, top - 10f);
-        batch.end();
+        font.draw(batch, "(" + player.getX() + "," + player.getY() + ")",
+            viewport.getCamera().position.x - viewport.getWorldWidth() / 2f + 10f,
+            viewport.getCamera().position.y + viewport.getWorldHeight() / 2f - 10f);
 
+        if (paused) {batch.draw(pauseScreen,
+                viewport.getCamera().position.x - viewport.getWorldWidth() / 2f,
+                viewport.getCamera().position.y - viewport.getWorldHeight() / 2f,
+                viewport.getWorldWidth(),
+                viewport.getWorldHeight());}
+        if (!paused) {drawInteraction();}
+
+        batch.end();
         debugRenderer.render(world, viewport.getCamera().combined.cpy().scl(PPM));
-    }
+        ui.render();}
 
     private void spawnNPC() {
         float angle = MathUtils.random(0f, MathUtils.PI2);
@@ -137,7 +154,7 @@ public class Main extends ApplicationAdapter {
 
         longBoiBody = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(10f / PPM, 10f / PPM); // 20 x 20 pixel hitbox
+        shape.setAsBox(10f / PPM, 10f / PPM);
         longBoiBody.createFixture(shape, 0f);
         shape.dispose();
     }
@@ -160,8 +177,8 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true);
-    }
+        viewport.update(width, height, false);
+        ui.resize(width, height);}
 
     @Override
     public void dispose() {
@@ -172,5 +189,7 @@ public class Main extends ApplicationAdapter {
         debugRenderer.dispose();
         world.dispose();
         npcTexture.dispose();
+        ui.dispose();
+        pauseScreen.dispose();
     }
 }
