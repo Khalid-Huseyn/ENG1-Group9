@@ -46,17 +46,17 @@
         .menu-bar {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 24px;
         }
 
         .folder-btn {
-            padding: 10px 20px;
+            padding: 10px 18px;
             background-color: #007bff;
             color: white;
             border: none;
             border-radius: 6px;
-            font-size: 15px;
+            font-size: 14.5px;
             font-weight: 500;
             cursor: pointer;
             transition: background-color 0.2s ease;
@@ -65,6 +65,15 @@
         .folder-btn:hover,
         .folder-btn.active {
             background-color: #0056b3;
+        }
+
+        .folder-btn-secondary {
+            background-color: #495057;
+        }
+
+        .folder-btn-secondary:hover,
+        .folder-btn-secondary.active {
+            background-color: #343a40;
         }
 
         /* Folder Content Container */
@@ -94,7 +103,7 @@
 
         .folder-title {
             margin: 0;
-            font-size: 21px;
+            font-size: 20px;
         }
 
         /* Status Badges */
@@ -121,7 +130,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 16px;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         .week-box {
@@ -149,8 +158,14 @@
             margin-bottom: 6px;
         }
 
+        .evidence-subheading {
+            margin: 18px 0 10px 0;
+            font-size: 15px;
+            color: #343a40;
+        }
+
         .snapshot-box {
-            margin-top: 14px;
+            margin-top: 16px;
             border: 1px solid #dee2e6;
             border-radius: 6px;
             padding: 12px;
@@ -169,6 +184,7 @@
             margin-top: 8px;
             font-size: 13px;
             color: #495057;
+            font-weight: 500;
         }
 
         /* Action Buttons inside Deliverables */
@@ -210,40 +226,68 @@
         /* Image Grid */
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 16px;
+            margin-top: 10px;
         }
 
         .image-card {
-            border: 1px solid #e0e0e0;
+            border: 1px solid #dee2e6;
             border-radius: 6px;
             overflow: hidden;
             background-color: #fff;
+            display: flex;
+            flex-direction: column;
         }
 
         .image-card a {
             display: block;
             text-decoration: none;
+            background-color: #f1f3f5;
         }
 
         .image-card img {
             width: 100%;
-            height: 180px;
-            object-fit: cover;
+            height: 230px;
+            object-fit: contain;
             display: block;
             transition: opacity 0.2s ease;
         }
 
         .image-card img:hover {
-            opacity: 0.85;
+            opacity: 0.88;
         }
 
         .image-card span {
             display: block;
-            padding: 8px 12px;
+            padding: 9px 12px;
             font-size: 13px;
-            color: #555;
+            color: #343a40;
             text-align: center;
+            border-top: 1px solid #e9ecef;
+            background-color: #fff;
+        }
+
+        .doc-card-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 230px;
+            background-color: #e7f1ff;
+            color: #0056b3;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 16px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .doc-card-preview small {
+            margin-top: 8px;
+            font-weight: 400;
+            font-size: 12.5px;
+            color: #495057;
         }
     </style>
 </head>
@@ -323,31 +367,34 @@
         <h2 class="section-heading">Weekly Progress &amp; Plan Snapshots</h2>
 
         <nav class="menu-bar">
-            <button class="folder-btn" data-target="week-1-folder" onclick="toggleFolder('week-1-folder')">
+            <button class="folder-btn week-btn" data-target="week-1-folder" onclick="toggleFolder('week-1-folder')">
                 📁 Week 1 (30 Sep – 04 Oct)
             </button>
-            <button class="folder-btn" data-target="week-2-folder" onclick="toggleFolder('week-2-folder')">
+            <button class="folder-btn week-btn" data-target="week-2-folder" onclick="toggleFolder('week-2-folder')">
                 📁 Week 2 (05 Oct – 11 Oct)
             </button>
-            <button class="folder-btn" data-target="week-3-folder" onclick="toggleFolder('week-3-folder')">
+            <button class="folder-btn week-btn" data-target="week-3-folder" onclick="toggleFolder('week-3-folder')">
                 📁 Week 3 (12 Oct – 18 Oct)
             </button>
-            <button class="folder-btn" data-target="week-4-folder" onclick="toggleFolder('week-4-folder')">
+            <button class="folder-btn week-btn" data-target="week-4-folder" onclick="toggleFolder('week-4-folder')">
                 📁 Week 4 (19 Oct – 25 Oct)
             </button>
-            <button class="folder-btn" data-target="week-5-folder" onclick="toggleFolder('week-5-folder')">
+            <button class="folder-btn week-btn" data-target="week-5-folder" onclick="toggleFolder('week-5-folder')">
                 📁 Week 5 (26 Oct – 01 Nov)
             </button>
-            <button class="folder-btn" data-target="week-6-folder" onclick="toggleFolder('week-6-folder')">
+            <button class="folder-btn week-btn" data-target="week-6-folder" onclick="toggleFolder('week-6-folder')">
                 📁 Week 6 (02 Nov – 08 Nov)
             </button>
-            <button class="folder-btn" data-target="week-7-folder" onclick="toggleFolder('week-7-folder')">
+            <button class="folder-btn week-btn" data-target="week-7-folder" onclick="toggleFolder('week-7-folder')">
                 📁 Week 7 (09 Nov – 18 Nov)
+            </button>
+            <button class="folder-btn folder-btn-secondary" id="toggle-all-weeks-btn" onclick="toggleAllWeeks()">
+                📂 Show All Weeks
             </button>
         </nav>
 
         <!-- WEEK 1 -->
-        <div id="week-1-folder" class="folder-content">
+        <div id="week-1-folder" class="folder-content week-folder">
             <div class="folder-header">
                 <h3 class="folder-title">Week 1 Progress: Kickoff &amp; Role Allocation (30 Sep – 04 Oct 2026)</h3>
                 <span class="status-badge status-completed">Completed</span>
@@ -374,14 +421,19 @@
                     </ul>
                 </div>
             </div>
-            <div class="snapshot-box" style="display:none;">
-                <img src="snapshots/week1-plan.png" alt="Week 1 Plan Snapshot" onload="this.parentElement.style.display='block'">
-                <div class="snapshot-caption">Week 1 Plan Snapshot (04/10/2026)</div>
+            <h4 class="evidence-subheading">Week 1 Screenshots &amp; Evidence</h4>
+            <div class="image-grid">
+                <div class="image-card">
+                    <a href="Screenshot%202026-11-14%20221332.jpg" target="_blank">
+                        <img src="Screenshot%202026-11-14%20221332.jpg" alt="Week 1 Role Allocation Matrix" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>Role Allocation &amp; Research Matrix</span>
+                </div>
             </div>
         </div>
 
         <!-- WEEK 2 -->
-        <div id="week-2-folder" class="folder-content">
+        <div id="week-2-folder" class="folder-content week-folder">
             <div class="folder-header">
                 <h3 class="folder-title">Week 2 Progress: Requirements Elicitation &amp; Customer Q&amp;A (05 Oct – 11 Oct 2026)</h3>
                 <span class="status-badge status-completed">Completed</span>
@@ -408,14 +460,22 @@
                     </ul>
                 </div>
             </div>
-            <div class="snapshot-box" style="display:none;">
-                <img src="snapshots/week2-plan.png" alt="Week 2 Plan Snapshot" onload="this.parentElement.style.display='block'">
-                <div class="snapshot-caption">Week 2 Plan Snapshot (11/10/2026)</div>
+            <h4 class="evidence-subheading">Week 2 Screenshots &amp; Evidence</h4>
+            <div class="image-grid">
+                <div class="image-card">
+                    <a href="Req1.pdf" target="_blank">
+                        <div class="doc-card-preview">
+                            📄 Customer Q&amp;A &amp; Requirements Baseline (Req1.pdf)
+                            <small>Click to view customer rulings (8 Oct) &amp; USR/SYS scope lock</small>
+                        </div>
+                    </a>
+                    <span>Customer Rulings &amp; Elicitation Record (08 Oct)</span>
+                </div>
             </div>
         </div>
 
         <!-- WEEK 3 -->
-        <div id="week-3-folder" class="folder-content">
+        <div id="week-3-folder" class="folder-content week-folder">
             <div class="folder-header">
                 <h3 class="folder-title">Week 3 Progress: Requirements Traceability &amp; Technical Setup (12 Oct – 18 Oct 2026)</h3>
                 <span class="status-badge status-completed">Completed</span>
@@ -442,14 +502,19 @@
                     </ul>
                 </div>
             </div>
-            <div class="snapshot-box" style="display:none;">
-                <img src="snapshots/week3-plan.png" alt="Week 3 Plan Snapshot" onload="this.parentElement.style.display='block'">
-                <div class="snapshot-caption">Week 3 Plan Snapshot (18/10/2026)</div>
+            <h4 class="evidence-subheading">Week 3 Screenshots &amp; Evidence</h4>
+            <div class="image-grid">
+                <div class="image-card">
+                    <a href="Screenshot%202026-11-14%20220445.png" target="_blank">
+                        <img src="Screenshot%202026-11-14%20220445.png" alt="2D Game Loop Research" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>2D Game Loop Architecture Research (12 Oct)</span>
+                </div>
             </div>
         </div>
 
         <!-- WEEK 4 -->
-        <div id="week-4-folder" class="folder-content">
+        <div id="week-4-folder" class="folder-content week-folder">
             <div class="folder-header">
                 <h3 class="folder-title">Week 4 Progress: Conceptual UML, Sprites &amp; Map Prototyping (19 Oct – 25 Oct 2026)</h3>
                 <span class="status-badge status-completed">Completed</span>
@@ -476,14 +541,31 @@
                     </ul>
                 </div>
             </div>
-            <div class="snapshot-box" style="display:none;">
-                <img src="snapshots/week4-plan.png" alt="Week 4 Plan Snapshot" onload="this.parentElement.style.display='block'">
-                <div class="snapshot-caption">Week 4 Plan Snapshot (25/10/2026)</div>
+            <h4 class="evidence-subheading">Week 4 Screenshots &amp; Evidence</h4>
+            <div class="image-grid">
+                <div class="image-card">
+                    <a href="Screenshot%202026-11-14%20220603.png" target="_blank">
+                        <img src="Screenshot%202026-11-14%20220603.png" alt="Pixel Art Sprites" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>Player, Tree &amp; Building Sprites (25 Oct)</span>
+                </div>
+                <div class="image-card">
+                    <a href="Screenshot%202026-11-14%20220833.png" target="_blank">
+                        <img src="Screenshot%202026-11-14%20220833.png" alt="Week 4 WIP Checklist" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>Map Bounds &amp; NPC AI WIP Log (25 Oct)</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/GROUP-PROJECT%20UML%20DRAFT.png" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/GROUP-PROJECT%20UML%20DRAFT.png" alt="Concept UML Draft" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>Initial Concept UML Draft (19 Oct)</span>
+                </div>
             </div>
         </div>
 
         <!-- WEEK 5 -->
-        <div id="week-5-folder" class="folder-content">
+        <div id="week-5-folder" class="folder-content week-folder">
             <div class="folder-header">
                 <h3 class="folder-title">Week 5 Progress: Architecture Refinement &amp; Map Bounds (26 Oct – 01 Nov 2026)</h3>
                 <span class="status-badge status-completed">Completed</span>
@@ -510,14 +592,25 @@
                     </ul>
                 </div>
             </div>
-            <div class="snapshot-box" style="display:none;">
-                <img src="snapshots/week5-plan.png" alt="Week 5 Plan Snapshot" onload="this.parentElement.style.display='block'">
-                <div class="snapshot-caption">Week 5 Plan Snapshot (01/11/2026)</div>
+            <h4 class="evidence-subheading">Week 5 Screenshots &amp; Evidence</h4>
+            <div class="image-grid">
+                <div class="image-card">
+                    <a href="Screenshot%202026-11-14%20221622.png" target="_blank">
+                        <img src="Screenshot%202026-11-14%20221622.png" alt="Draft 2 Class Blocks" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>Draft 2 Class Definitions (Timer, Game_Engine, Hidden_Event)</span>
+                </div>
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/snake_case%20ENG1%20Group%209%20UML%20LucidChart.png" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/snake_case%20ENG1%20Group%209%20UML%20LucidChart.png" alt="Draft 2 Lucidchart UML" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>Draft 2 snake_case UML Diagram (30 Oct)</span>
+                </div>
             </div>
         </div>
 
         <!-- WEEK 6 -->
-        <div id="week-6-folder" class="folder-content">
+        <div id="week-6-folder" class="folder-content week-folder">
             <div class="folder-header">
                 <h3 class="folder-title">Week 6 Progress: Architecture Freeze &amp; Risk Register (02 Nov – 08 Nov 2026)</h3>
                 <span class="status-badge status-completed">Completed</span>
@@ -544,14 +637,25 @@
                     </ul>
                 </div>
             </div>
-            <div class="snapshot-box" style="display:none;">
-                <img src="snapshots/week6-plan.png" alt="Week 6 Plan Snapshot" onload="this.parentElement.style.display='block'">
-                <div class="snapshot-caption">Week 6 Plan Snapshot (08/11/2026)</div>
+            <h4 class="evidence-subheading">Week 6 Screenshots &amp; Evidence</h4>
+            <div class="image-grid">
+                <div class="image-card">
+                    <a href="Concepts%20and%20Early%20Iterations/Architecture/PascalCase%20ENG1%20Group%209%20UML%20-%20Page%201.png" target="_blank">
+                        <img src="Concepts%20and%20Early%20Iterations/Architecture/PascalCase%20ENG1%20Group%209%20UML%20-%20Page%201.png" alt="Final PascalCase UML" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>Final PascalCase 17-Class UML (04 Nov)</span>
+                </div>
+                <div class="image-card">
+                    <a href="Screenshot%202026-11-15%20164833.jpg" target="_blank">
+                        <img src="Screenshot%202026-11-15%20164833.jpg" alt="Early Website Iteration" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>Initial Website Portal Architecture View</span>
+                </div>
             </div>
         </div>
 
         <!-- WEEK 7 (FINAL WEEK THROUGH SUBMISSION) -->
-        <div id="week-7-folder" class="folder-content">
+        <div id="week-7-folder" class="folder-content week-folder">
             <div class="folder-header">
                 <h3 class="folder-title">Week 7 Progress: Gameplay Integration, Final Checklist, Testing &amp; Submission (09 Nov – 18 Nov 2026)</h3>
                 <span class="status-badge status-progress">In Progress</span>
@@ -584,9 +688,44 @@
                     </ul>
                 </div>
             </div>
+
             <div class="snapshot-box">
                 <img src="goosego_project_timeline.png" alt="Week 7 Project Timeline & Gantt Chart" onerror="this.parentElement.style.display='none'">
-                <div class="snapshot-caption">Week 7 Project Timeline &amp; Gantt Chart Snapshot (15/11/2026)</div>
+                <div class="snapshot-caption">Project Timeline &amp; Gantt Chart Snapshot (Weeks 1–7)</div>
+            </div>
+
+            <h4 class="evidence-subheading">Week 7 Screenshots &amp; Evidence</h4>
+            <div class="image-grid">
+                <div class="image-card">
+                    <a href="Screenshot%202026-11-14%20220751.png" target="_blank">
+                        <img src="Screenshot%202026-11-14%20220751.png" alt="Core Gameplay Features Log" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>Gameplay Mechanics Completed (12 Nov)</span>
+                </div>
+                <div class="image-card">
+                    <a href="Screenshot%202026-11-13%20214114.png" target="_blank">
+                        <img src="Screenshot%202026-11-13%20214114.png" alt="Playable Prototype Screenshot" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>Lakeside Prototype &amp; Long Boi Hitbox (13 Nov)</span>
+                </div>
+                <div class="image-card">
+                    <a href="Screenshot%202026-11-15%20170301.png" target="_blank">
+                        <img src="Screenshot%202026-11-15%20170301.png" alt="Update/Draw Separation & Pause Status" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>Update/Draw Separation &amp; Pause Status (13 Nov)</span>
+                </div>
+                <div class="image-card">
+                    <a href="Screenshot%202026-11-14%20221410.png" target="_blank">
+                        <img src="Screenshot%202026-11-14%20221410.png" alt="GameEngine Refactor Notes" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>GameEngine &amp; 60 FPS Cap Spec</span>
+                </div>
+                <div class="image-card">
+                    <a href="image_6b8002.png" target="_blank">
+                        <img src="image_6b8002.png" alt="Final Sprint Definition of Done" onerror="this.closest('.image-card').style.display='none'">
+                    </a>
+                    <span>Impl1.pdf &amp; 6-Point Completion Checklist (15 Nov)</span>
+                </div>
             </div>
         </div>
     </section>
@@ -674,7 +813,16 @@
     </section>
 
     <script>
+        let allWeeksOpen = false;
+
         function openFolder(folderId) {
+            allWeeksOpen = false;
+            const toggleAllBtn = document.getElementById('toggle-all-weeks-btn');
+            if (toggleAllBtn) {
+                toggleAllBtn.classList.remove('active');
+                toggleAllBtn.textContent = '📂 Show All Weeks';
+            }
+
             document.querySelectorAll('.folder-content').forEach(el => {
                 el.classList.remove('show');
             });
@@ -694,7 +842,7 @@
 
         function toggleFolder(folderId) {
             const folder = document.getElementById(folderId);
-            const isAlreadyOpen = folder.classList.contains('show');
+            const isAlreadyOpen = folder.classList.contains('show') && !allWeeksOpen;
 
             if (isAlreadyOpen) {
                 folder.classList.remove('show');
@@ -704,6 +852,23 @@
             } else {
                 openFolder(folderId);
                 history.pushState(null, null, '#' + folderId);
+            }
+        }
+
+        function toggleAllWeeks() {
+            const toggleAllBtn = document.getElementById('toggle-all-weeks-btn');
+            document.querySelectorAll('.folder-content').forEach(el => el.classList.remove('show'));
+            document.querySelectorAll('.folder-btn').forEach(btn => btn.classList.remove('active'));
+
+            if (!allWeeksOpen) {
+                document.querySelectorAll('.week-folder').forEach(el => el.classList.add('show'));
+                document.querySelectorAll('.week-btn').forEach(btn => btn.classList.add('active'));
+                toggleAllBtn.classList.add('active');
+                toggleAllBtn.textContent = '📁 Collapse All Weeks';
+                allWeeksOpen = true;
+            } else {
+                toggleAllBtn.textContent = '📂 Show All Weeks';
+                allWeeksOpen = false;
             }
         }
 
