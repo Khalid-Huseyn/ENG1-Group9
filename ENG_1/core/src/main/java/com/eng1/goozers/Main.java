@@ -36,6 +36,8 @@ public class Main extends ApplicationAdapter {
 
     private UI ui;
     private final GameEngine gameEngine = new GameEngine();
+    private boolean gameStarted = false;
+    private boolean gameOver = false;
     private World world;
     private Body longBoiBody;
     private Player player;
@@ -97,9 +99,43 @@ public class Main extends ApplicationAdapter {
         ui.addBreadItems(breadTexture);
     }
 
-    /** checks Esc, moves the characters during play and draws the game frame by frame (each frame) */
+    /**
+     * checks Esc, moves the characters during play and draws the game frame by
+     * frame (each frame)
+     */
     @Override
     public void render() {
+
+        // Show the starting screen until Enter is pressed.
+        if (!gameStarted) {
+            drawMenu(
+                    "GOOSE PATROL",
+                    "ENTER - Start\nWASD - Move\n1-8 - Select item\nF - Drop bread");
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                gameStarted = true;
+                gameEngine.resumeGame();
+            }
+
+            return;
+        }
+
+        // End the game when the player's health reaches zero.
+        if (player.getCurrentHP() <= 0) {
+            gameOver = true;
+        }
+
+        // Show the ending screen instead of updating the game.
+        if (gameOver) {
+            drawMenu("GAME OVER", "You ran out of health.\nESC - Quit");
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                Gdx.app.exit();
+            }
+
+            return;
+        }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             if (gameEngine.isPaused()) {
                 gameEngine.resumeGame();
@@ -153,9 +189,28 @@ public class Main extends ApplicationAdapter {
         ui.render();
     }
 
+    private void drawMenu(String title, String instructions) {
+        ScreenUtils.clear(0.1f, 0.1f, 0.15f, 1f);
+
+        viewport.apply();
+        batch.setProjectionMatrix(viewport.getCamera().combined);
+
+        float left = viewport.getCamera().position.x
+                - viewport.getWorldWidth() / 2f;
+        float bottom = viewport.getCamera().position.y
+                - viewport.getWorldHeight() / 2f;
+
+        batch.begin();
+        font.draw(batch, title, left + 30f, bottom + 160f);
+        font.draw(batch, instructions, left + 30f, bottom + 110f);
+        batch.end();
+    }
+
     /**
-     * reads movement keys and lets the ducks chase, peck or move away from the player
-     * - Box2D does the work to find where everyone ends up, and then the images and camera move to match it
+     * reads movement keys and lets the ducks chase, peck or move away from the
+     * player
+     * - Box2D does the work to find where everyone ends up, and then the images and
+     * camera move to match it
      */
     private void updateGame() {
         float delta = Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
@@ -171,8 +226,10 @@ public class Main extends ApplicationAdapter {
         }
 
         /**
-         * limit the time added after a slow frame, then calculate movement in 1/60-second steps
-         * - we do this because BOX2D works time in chunks of 1/60 a second so if a frame is slow,
+         * limit the time added after a slow frame, then calculate movement in
+         * 1/60-second steps
+         * - we do this because BOX2D works time in chunks of 1/60 a second so if a
+         * frame is slow,
          * - the game will cap how much time is needed to avoid trying to catchup
          */
         accumulator += delta;
@@ -223,18 +280,20 @@ public class Main extends ApplicationAdapter {
 
         for (int i = groundBreads.size() - 1; i >= 0; i--) {
             Vector2 bread = groundBreads.get(i);
-            boolean outside =
-                bread.x + halfBread < cameraX - halfWidth ||
-                bread.x - halfBread > cameraX + halfWidth ||
-                bread.y + halfBread < cameraY - halfHeight ||
-                bread.y - halfBread > cameraY + halfHeight;
+            boolean outside = bread.x + halfBread < cameraX - halfWidth ||
+                    bread.x - halfBread > cameraX + halfWidth ||
+                    bread.y + halfBread < cameraY - halfHeight ||
+                    bread.y - halfBread > cameraY + halfHeight;
             if (outside) {
                 groundBreads.remove(i);
             }
         }
     }
 
-    /** creates a duck 120 pixels from the player in a random direction the ducks can also appear outside the map */
+    /**
+     * creates a duck 120 pixels from the player in a random direction the ducks can
+     * also appear outside the map
+     */
     private void spawnNPC() {
         float angle = MathUtils.random(0f, MathUtils.PI2);
         float x = player.getCentreX() + MathUtils.cos(angle) * 120f;
@@ -273,8 +332,10 @@ public class Main extends ApplicationAdapter {
     }
 
     /**
-     * to avoid the player from walking through the statue since it's a picture from the map,
-     * we add an invisible 20-by-20-pixel box that blocks movement through the statue
+     * to avoid the player from walking through the statue since it's a picture from
+     * the map,
+     * we add an invisible 20-by-20-pixel box that blocks movement through the
+     * statue
      */
     private void createLongBoi() {
         BodyDef bodyDef = new BodyDef();
@@ -288,7 +349,10 @@ public class Main extends ApplicationAdapter {
         shape.dispose();
     }
 
-    /** checks whether the player is near Long Boi and presses E, then shows the message */
+    /**
+     * checks whether the player is near Long Boi and presses E, then shows the
+     * message
+     */
     private void drawInteraction() {
         float dx = player.getCentreX() - statueX;
         float dy = player.getCentreY() - statueY;
@@ -314,7 +378,10 @@ public class Main extends ApplicationAdapter {
         ui.resize(width, height);
     }
 
-    /** frees the images, text and physics resources when the game is done using them and closes */
+    /**
+     * frees the images, text and physics resources when the game is done using them
+     * and closes
+     */
     @Override
     public void dispose() {
         map.dispose();
