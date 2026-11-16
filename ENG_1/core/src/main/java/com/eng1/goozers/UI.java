@@ -11,6 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import java.util.Locale;
 
 /** The inventory, selection highlight and player health bar. */
 public class UI {
@@ -21,6 +25,9 @@ public class UI {
     private Image hl;
     private Group inventory;
     private int currentSlot = 0;
+    private BitmapFont timerFont;
+    private Label timerLabel;
+    private int lastDisplayedSecond = -1;
 
     private static final int BAR_W = 160;
     private static final int BAR_H = 48;
@@ -65,6 +72,18 @@ public class UI {
         hud.add(inventory).size(BAR_W * SCALE, BAR_H * SCALE);
 
         uiStage.addActor(hud);
+
+        timerFont = new BitmapFont();
+
+        timerLabel = new Label("00:00", new Label.LabelStyle(timerFont, Color.WHITE));
+        Table timerHud = new Table();
+        timerHud.setFillParent(true);
+        timerHud.top().right();
+        timerHud.padTop(10f);
+        timerHud.padRight(10f);
+        timerHud.add(timerLabel);
+
+        uiStage.addActor(timerHud);
         uiStage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         selectSlot(0);
     }
@@ -156,13 +175,24 @@ public class UI {
 
         healthBar.setSize(hpBarTexture.getWidth(), hpBarTexture.getHeight());
         healthBar.setPosition(10f, 10f);
-        uiStage.addActor(healthBar);
+        uiStage.addActor(healthBar);}
+
+    public void updateTimer(float elapsedTime) {
+
+        int totalSeconds = (int) elapsedTime;
+        if (totalSeconds == lastDisplayedSecond) return;
+        lastDisplayedSecond = totalSeconds;
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+
+        timerLabel.setText(String.format(Locale.ROOT, "%02d:%02d", minutes, seconds));
     }
 
     public void dispose() {
         uiStage.dispose();
         invTexture.dispose();
         hlTexture.dispose();
+        timerFont.dispose();
         if (hpBarTexture != null) hpBarTexture.dispose();
         if (fullBar != null) fullBar.dispose();
         // The bread texture is owned and disposed by Main, not by UI.

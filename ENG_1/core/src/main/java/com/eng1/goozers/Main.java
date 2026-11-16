@@ -49,7 +49,7 @@ public class Main extends ApplicationAdapter {
     private boolean inspectedDuck = false;
     private float accumulator = 0f;
     private static final float DEAD_ZONE_W_H = 32f;
-
+    private float Time = 0f;
     private final ArrayList<NPC> npcs = new ArrayList<>();
     private Texture npcTexture;
     private Texture breadTexture;
@@ -100,7 +100,7 @@ public class Main extends ApplicationAdapter {
      */
     @Override
     public void render() {
-
+        float delta = Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
         // Show the starting screen until Enter is pressed.
         if (!gameStarted) {
             drawMenu(
@@ -111,7 +111,6 @@ public class Main extends ApplicationAdapter {
                 gameStarted = true;
                 gameEngine.resumeGame();
             }
-
             return;
         }
 
@@ -143,6 +142,7 @@ public class Main extends ApplicationAdapter {
         ui.handleInput();
         boolean paused = gameEngine.isPaused();
         if (!paused) {
+            Time += delta;
             if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
                 // press H during play to test losing 10 health -Dev Feature-
                 player.takeDamage(10);
@@ -189,13 +189,12 @@ public class Main extends ApplicationAdapter {
                     viewport.getWorldWidth(), viewport.getWorldHeight());
             font.draw(batch, "Paused - Press Esc to resume", left + 10f, top - 30f);
         } else {
-            font.draw(batch, "(" + player.getX() + "," + player.getY() + ")", left + 10f, top - 10f);
             // only check E in the method and show the Long Boi message while playing
             drawInteraction();
         }
 
         batch.end();
-        debugRenderer.render(world, viewport.getCamera().combined.cpy().scl(PPM));
+        ui.updateTimer(Time);
         ui.render();
     }
 
