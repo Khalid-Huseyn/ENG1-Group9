@@ -1,35 +1,42 @@
 package com.eng1.goozers;
 
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-/**
- * controls a duck that chases the player, pecks once and then moves away
- * Main updates and draws each duck and removes fleeing ducks outside the camera view
- */
+/** One duck: chase, peck, follow bread, eat, and flee. */
 public class NPC {
 
-    // Box2D measures positions in metres one metre here equals 32 drawing pixels
     private static final float PPM = 32f;
-    private static final float SPEED = 65f;
+    private static final float SPEED = 40f;       // pixels per second while chasing bread/player
+    private static final float RUN_SPEED = 10f;   // pixels per second when fleeing
+    private static final float PECK_DISTANCE = 12f;
+    private static final float BREAD_DISTANCE = 12f;
+    private static final float EATING_DURATION = 2f;
+
     private final Sprite sprite;
     private final Body body;
-    private static final float runSpeed = 10f;
-    private static final float peckDist  = 8f;
-    private boolean fleeing = false;
+
+    private enum State {
+        CHASING, DISTRACTED, EATING, FLEEING
+    }
+
+    private State state = State.CHASING;
+    private final Vector2 breadTarget = new Vector2();
     private final Vector2 fleeDirection = new Vector2();
+    private float eatingTimer = 0f;
+    private boolean hasBeenVisible = false;
 
-    /** creates a duck and its collision box using the image and position supplied by Main */
     public NPC(World world, Texture texture, float x, float y) {
-
         sprite = new Sprite(texture);
-        sprite.setSize(16, 16);
-        // sprite.setColor(1f, 0.5f, 0.5f, 1f) gives the duck a tint colour
+        sprite.setSize(16f, 16f);
+
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(x / PPM, y / PPM);
@@ -37,76 +44,139 @@ public class NPC {
 
         body = world.createBody(def);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(2f / PPM, 2f / PPM);
+        shape.setAsBox(3f / PPM, 3f / PPM);
         body.createFixture(shape, 1f);
         shape.dispose();
 
         update();
     }
 
-    /**
-     * moves towards the player until close enough to peck
-     * ducks that have already pecked keep moving away instead of chasing again
-     */
-    public void chase(Player player) {
+    /** Only ducks that are chasing can be redirected by a newly dropped loaf. */
+    public void distract(float breadX, float breadY) {
+        if (state != State.CHASING) return;
 
-        if (fleeing) {
-            body.setLinearVelocity(fleeDirection.x * runSpeed / PPM, fleeDirection.y * runSpeed / PPM);
+        breadTarget.set(breadX / PPM, breadY / PPM);
+        state = State.DISTRACTED;
+    }
+
+    /** Called by Main once per unpaused frame. delta is measured in seconds. */
+    public void chase(Player player, float delta) {
+        if (state == State.FLEEING) {
+            body.setLinearVelocity(
+                fleeDirection.x * RUN_SPEED / PPM,
+                fleeDirection.y * RUN_SPEED / PPM
+            );
             return;
         }
 
-        float distanceToPlayer = (float) Math.sqrt(
-            Math.pow(player.getCentreX() / PPM - body.getPosition().x, 2) + Math.pow((player.getCentreY() - 8f) / PPM - body.getPosition().y, 2));
+        if (state == State.EATING) {
+            body.setLinearVelocity(0f, 0f);
+            eatingTimer -= delta;
+            if (eatingTimer <= 0f) {
+                startFleeing(player);
+            }
+            return;
+        }
 
-        if (distanceToPlayer <= peckDist / PPM) {
+        if (state == State.DISTRACTED) {
+            if (body.getPosition().dst(breadTarget) <= BREAD_DISTANCE / PPM) {
+                state = State.EATING;
+                eatingTimer = EATING_DURATION;
+                body.setLinearVelocity(0f, 0f);
+            } else {
+                moveTowards(breadTarget.x, breadTarget.y);
+            }
+            return;
+        }
+
+        // The player sprite is centred on their Box2D body after Player.update().
+        float targetX = player.getCentreX() / PPM;
+        float targetY = player.getCentreY() / PPM;
+
+        if (body.getPosition().dst(targetX, targetY) <= PECK_DISTANCE / PPM) {
             peck(player);
             return;
         }
 
-        body.setLinearVelocity(player.getCentreX() / PPM - body.getPosition().x, (player.getCentreY() - 8f) / PPM - body.getPosition().y);
+        moveTowards(targetX, targetY);
     }
 
-    /** moves the duck image to match the position calculated by Box2D */
-    public void update() {
-        sprite.setPosition(body.getPosition().x * PPM - 8f, body.getPosition().y * PPM - 8f);
+    private void moveTowards(float targetX, float targetY) {
+        float dx = targetX - body.getPosition().x;
+        float dy = targetY - body.getPosition().y;
+        float length = (float) Math.sqrt(dx * dx + dy * dy);
+
+        if (length > 0.0001f) {
+            body.setLinearVelocity(
+                dx / length * SPEED / PPM,
+                dy / length * SPEED / PPM
+            );
+        } else {
+            body.setLinearVelocity(0f, 0f);
+        }
     }
 
-    /** Main calls this to draw the duck at its updated position */
-    public void draw(SpriteBatch batch) {
-        sprite.draw(batch);
-    }
-
-    /** asks Player to take 10 damage and turns the duck to move away at 10 pixels per second */
-    private void peck(Player player){
+    private void peck(Player player) {
         player.takeDamage(10);
-        fleeing = true;
-        fleeDirection.set(body.getPosition().x - player.getCentreX() / PPM, body.getPosition().y - (player.getCentreY() - 8f) / PPM);
+        startFleeing(player);
+    }
+
+    private void startFleeing(Player player) {
+        state = State.FLEEING;
+        fleeDirection.set(
+            body.getPosition().x - player.getCentreX() / PPM,
+            body.getPosition().y - player.getCentreY() / PPM
+        );
+
+        if (fleeDirection.isZero(0.001f)) {
+            fleeDirection.set(1f, 0f);
+        }
         fleeDirection.nor();
 
         sprite.setOriginCenter();
         sprite.setRotation(fleeDirection.angleDeg());
-        body.setLinearVelocity(fleeDirection.x * runSpeed / PPM, fleeDirection.y * runSpeed / PPM);
+        body.setLinearVelocity(
+            fleeDirection.x * RUN_SPEED / PPM,
+            fleeDirection.y * RUN_SPEED / PPM
+        );
     }
 
-    /** tells Main whether a fleeing duck is fully outside the camera view and can be removed */
-    public boolean Despawn(FitViewport viewport) {
-        if (!fleeing) {
-            return false;
-        }
+    public void update() {
+        sprite.setPosition(
+            body.getPosition().x * PPM - 8f,
+            body.getPosition().y * PPM - 8f
+        );
+    }
 
+    public void draw(SpriteBatch batch) {
+        sprite.draw(batch);
+    }
+
+    /** Remove a duck only after it has actually appeared in view. */
+    public boolean Despawn(FitViewport viewport) {
         float cameraX = viewport.getCamera().position.x;
         float cameraY = viewport.getCamera().position.y;
-        float camCentreX = viewport.getWorldWidth() / 2f;
-        float camCentreY = viewport.getWorldHeight() / 2f;
+        float halfWidth = viewport.getWorldWidth() / 2f;
+        float halfHeight = viewport.getWorldHeight() / 2f;
 
-        return (
-            sprite.getX() + sprite.getWidth() < cameraX-camCentreX ||
-            sprite.getX() > cameraX+camCentreX ||
-            sprite.getY() + sprite.getHeight() < cameraY-camCentreY ||
-            sprite.getY() > cameraY + camCentreY);
+        float spriteCenterX = sprite.getX() + sprite.getWidth() / 2f;
+        float spriteCenterY = sprite.getY() + sprite.getHeight() / 2f;
+        // Half the diagonal covers the corners of a rotated 16x16 duck sprite.
+        float radius = (float) Math.sqrt(
+            sprite.getWidth() * sprite.getWidth() +
+            sprite.getHeight() * sprite.getHeight()
+        ) / 2f;
+
+        boolean outside =
+            spriteCenterX + radius < cameraX - halfWidth ||
+            spriteCenterX - radius > cameraX + halfWidth ||
+            spriteCenterY + radius < cameraY - halfHeight ||
+            spriteCenterY - radius > cameraY + halfHeight;
+
+        if (!outside) hasBeenVisible = true;
+        return hasBeenVisible && outside;
     }
 
-    /** gives Main the duck collision body so it can remove it from the physics world */
     public Body getBody() {
         return body;
     }

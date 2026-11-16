@@ -55,6 +55,9 @@ public class Main extends ApplicationAdapter {
 
     private final ArrayList<NPC> npcs = new ArrayList<>();
     private Texture npcTexture;
+    private Texture breadTexture;
+    private static final float BREAD_SIZE = 16f;
+    private final ArrayList<Vector2> groundBreads = new ArrayList<>();
     private float spawnTimer = 0f;
 
     /**
@@ -78,6 +81,8 @@ public class Main extends ApplicationAdapter {
         npcTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         pauseScreen = new Texture(Gdx.files.internal("map/PAUSED.png"));
         pauseScreen.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        breadTexture = new Texture(Gdx.files.internal("ui/bread.png"));
+        breadTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         spawnNPC();
 
         debugRenderer = new Box2DDebugRenderer();
@@ -85,8 +90,11 @@ public class Main extends ApplicationAdapter {
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         viewport.getCamera().position.set(player.getCentreX(), player.getCentreY(), 0);
 
+        viewport.getCamera().update();
+
         ui = new UI();
         ui.createHealthBar(player);
+        ui.addBreadItems(breadTexture);
     }
 
     /** checks Esc, moves the characters during play and draws the game frame by frame (each frame) */
@@ -100,11 +108,16 @@ public class Main extends ApplicationAdapter {
             }
         }
 
+        // Select the inventory slot before checking whether to use bread.
+        ui.handleInput();
         boolean paused = gameEngine.isPaused();
         if (!paused) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
                 // press H during play to test losing 10 health -Dev Feature-
                 player.takeDamage(10);
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.F) && ui.useSelectedBread()) {
+                dropBread();
             }
             updateGame();
         }
@@ -114,6 +127,10 @@ public class Main extends ApplicationAdapter {
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
         batch.draw(map, 0, 0);
+        for (Vector2 bread : groundBreads) {
+            batch.draw(breadTexture, bread.x - BREAD_SIZE / 2f,
+                    bread.y - BREAD_SIZE / 2f, BREAD_SIZE, BREAD_SIZE);
+        }
         for (NPC npc : npcs) {
             npc.draw(batch);
         }
@@ -141,15 +158,16 @@ public class Main extends ApplicationAdapter {
      * - Box2D does the work to find where everyone ends up, and then the images and camera move to match it
      */
     private void updateGame() {
+        float delta = Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
         player.input();
-        spawnTimer += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
+        spawnTimer += delta;
 
-        if (spawnTimer >= 3f && npcs.size() < 10) {
+        if (spawnTimer >= 3f && npcs.size() < 20) {
             spawnNPC();
             spawnTimer = 0f;
         }
         for (NPC npc : npcs) {
-            npc.chase(player);
+            npc.chase(player, delta);
         }
 
         /**
@@ -157,7 +175,7 @@ public class Main extends ApplicationAdapter {
          * - we do this because BOX2D works time in chunks of 1/60 a second so if a frame is slow,
          * - the game will cap how much time is needed to avoid trying to catchup
          */
-        accumulator += Math.min(Gdx.graphics.getDeltaTime(), 0.25f);
+        accumulator += delta;
         while (accumulator >= TIME_STEP) {
             world.step(TIME_STEP, 6, 2);
             accumulator -= TIME_STEP;
@@ -170,8 +188,9 @@ public class Main extends ApplicationAdapter {
         }
 
         updateCamera();
+        removeOffscreenBread();
 
-        // remove fleeing ducks once they leave the camera view
+        // remove ducks once they have been visible and then leave the camera view
         // work backwards so removing a duck does not make us skip the next one
         for (int i = npcs.size() - 1; i >= 0; i--) {
             NPC npc = npcs.get(i);
@@ -179,6 +198,38 @@ public class Main extends ApplicationAdapter {
                 // remove the collision body as well as the duck from the list
                 world.destroyBody(npc.getBody());
                 npcs.remove(i);
+            }
+        }
+    }
+
+    private void dropBread() {
+        // A dropped loaf appears at the player's feet.
+        float breadX = player.getCentreX();
+        float breadY = player.getCentreY() - 8f;
+        groundBreads.add(new Vector2(breadX, breadY));
+
+        // Ducks that are already eating or fleeing do not switch targets.
+        for (NPC npc : npcs) {
+            npc.distract(breadX, breadY);
+        }
+    }
+
+    private void removeOffscreenBread() {
+        float cameraX = viewport.getCamera().position.x;
+        float cameraY = viewport.getCamera().position.y;
+        float halfWidth = viewport.getWorldWidth() / 2f;
+        float halfHeight = viewport.getWorldHeight() / 2f;
+        float halfBread = BREAD_SIZE / 2f;
+
+        for (int i = groundBreads.size() - 1; i >= 0; i--) {
+            Vector2 bread = groundBreads.get(i);
+            boolean outside =
+                bread.x + halfBread < cameraX - halfWidth ||
+                bread.x - halfBread > cameraX + halfWidth ||
+                bread.y + halfBread < cameraY - halfHeight ||
+                bread.y - halfBread > cameraY + halfHeight;
+            if (outside) {
+                groundBreads.remove(i);
             }
         }
     }
@@ -217,6 +268,7 @@ public class Main extends ApplicationAdapter {
         }
 
         viewport.getCamera().position.set(cameraX, cameraY, 0);
+        viewport.getCamera().update();
 
     }
 
@@ -274,5 +326,6 @@ public class Main extends ApplicationAdapter {
         npcTexture.dispose();
         ui.dispose();
         pauseScreen.dispose();
+        breadTexture.dispose();
     }
 }

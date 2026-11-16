@@ -4,57 +4,57 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-/**
- * Main draws the map and character first
- * UI then draws the health bar and inventory slots over the game
- *
- * reads health from Player and uses keys 1 to 8 to highlight a slot
- *
- * using items still needs to be added
- */
+/** The inventory, selection highlight and player health bar. */
 public class UI {
 
     private Stage uiStage;
     private Texture invTexture;
     private Texture hlTexture;
     private Image hl;
+    private Group inventory;
     private int currentSlot = 0;
-    private static final int barW = 160;
-    private static final int barH = 48;
-    private static final int slotCount = 8;
-    private static final int slotSize = 16;
-    private static final float scaleF = 1.5f;
+
+    private static final int BAR_W = 160;
+    private static final int BAR_H = 48;
+    private static final int SLOT_COUNT = 8;
+    private static final int SLOT_SIZE = 16;
+    private static final float SCALE = 1.5f;
+
     private Texture hpBarTexture;
     private Texture fullBar;
     private Actor healthBar;
 
-    /** the UI object builds the inventory display and then Main adds the health bar afterwards */
-    public UI() {
-        createUI();}
+    // Three individual bread items, all using Main's shared texture.
+    private final Image[] breadIcons = new Image[3];
 
-    /** createUI() places eight inventory slots at the bottom centre of the screen */
+    public UI() {
+        createUI();
+    }
+
     private void createUI() {
         uiStage = new Stage(new ScreenViewport());
         invTexture = new Texture(Gdx.files.internal("ui/inventBar.png"));
         invTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        Group inventory = new Group();
-        inventory.setSize(barW * scaleF, barH * scaleF);
+        inventory = new Group();
+        inventory.setSize(BAR_W * SCALE, BAR_H * SCALE);
+
         Image background = new Image(invTexture);
-        background.setSize(barW * scaleF, barH * scaleF);
+        background.setSize(BAR_W * SCALE, BAR_H * SCALE);
         inventory.addActor(background);
 
-        createHighlight();
+        hlTexture = new Texture(Gdx.files.internal("ui/hlSprite.png"));
+        hlTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         hl = new Image(hlTexture);
-        hl.setSize(slotSize * scaleF, slotSize * scaleF);
+        hl.setSize(SLOT_SIZE * SCALE, SLOT_SIZE * SCALE);
         hl.setTouchable(Touchable.disabled);
         inventory.addActor(hl);
 
@@ -62,69 +62,71 @@ public class UI {
         hud.setFillParent(true);
         hud.bottom();
         hud.padBottom(12);
-        hud.add(inventory).size(barW * scaleF, barH * scaleF);
+        hud.add(inventory).size(BAR_W * SCALE, BAR_H * SCALE);
 
         uiStage.addActor(hud);
         uiStage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-
         selectSlot(0);
     }
 
-    /** loads the image that highlights the selected slot */
-    private void createHighlight() {
-        hlTexture = new Texture(Gdx.files.internal("ui/hlSprite.png"));
-        hlTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-    }
-
-    /**
-     * moves the highlight to the chosen slot and slot numbers start at zero
-     * - for example: key 1 selects 0, key 8 selects slot 7
-     */
     private void selectSlot(int index) {
         currentSlot = index;
-        hl.setPosition((slotSize + index * slotSize) * scaleF, 1 + slotSize * scaleF);
+        hl.setPosition(
+            (SLOT_SIZE + index * SLOT_SIZE) * SCALE,
+            1f + SLOT_SIZE * SCALE
+        );
     }
 
-    /**
-     * checks keys 1 to 8 and draws the health bar and inventory, even while paused
-     * - this works because Main calls UI.render() on every frame
-     */
-    public void render() {
-        for (int i = 0; i < slotCount; i++) {
-
-            if (Gdx.input.isKeyJustPressed(
-                Input.Keys.NUM_1 + i
-            )) {
+    /** Call before checking F in Main so 1+F on the same frame uses the right slot. */
+    public void handleInput() {
+        for (int i = 0; i < SLOT_COUNT; i++) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1 + i)) {
                 selectSlot(i);
-            }}
+            }
+        }
+    }
+
+    /** Add one bread icon to each of slots 1, 2 and 3. Does not own the texture. */
+    public void addBreadItems(Texture breadTexture) {
+        for (int i = 0; i < breadIcons.length; i++) {
+            Image bread = new Image(breadTexture);
+            bread.setSize(SLOT_SIZE * SCALE, SLOT_SIZE * SCALE);
+            bread.setPosition(
+                (SLOT_SIZE + i * SLOT_SIZE) * SCALE,
+                1f + SLOT_SIZE * SCALE
+            );
+            bread.setTouchable(Touchable.disabled);
+            inventory.addActor(bread);
+            breadIcons[i] = bread;
+        }
+        hl.toFront();
+    }
+
+    /** Consume the currently selected loaf; false means empty/non-bread slot. */
+    public boolean useSelectedBread() {
+        if (currentSlot < 0 || currentSlot >= breadIcons.length) return false;
+
+        Image bread = breadIcons[currentSlot];
+        if (bread == null || !bread.isVisible()) return false;
+
+        bread.setVisible(false);
+        return true;
+    }
+
+    public int getCurrentSlot() {
+        return currentSlot;
+    }
+
+    public void render() {
         uiStage.getViewport().apply();
         uiStage.act(Gdx.graphics.getDeltaTime());
         uiStage.draw();
     }
 
-    /**
-     * returns the selected slot number for future item features
-     * - lets other code ask which slot is selected
-     */
-    public int getCurrentSlot() {
-        return currentSlot;
-    }
-
-    /** adjusts the UI to fit the window size even when changing it */
     public void resize(int width, int height) {
         uiStage.getViewport().update(width, height, true);
     }
 
-    /** frees the UI images and drawing resources that belongs to UI from memory */
-    public void dispose() {
-        uiStage.dispose();
-        invTexture.dispose();
-        hlTexture.dispose();
-        if (hpBarTexture != null) hpBarTexture.dispose();
-        if (fullBar != null) fullBar.dispose();
-    }
-
-    /** adds a health bar that checks Player for the current health each time it is drawn */
     public void createHealthBar(Player player) {
         hpBarTexture = new Texture(Gdx.files.internal("ui/healthBar.png"));
         fullBar = new Texture(Gdx.files.internal("ui/fullBar.png"));
@@ -136,21 +138,33 @@ public class UI {
             public void draw(Batch batch, float parentAlpha) {
                 float percentage = player.getHpPercentage();
                 batch.draw(hpBarTexture, getX(), getY(), getWidth(), getHeight());
-                /**
-                 * show only enough of the coloured bar to match the remaining health
-                 * - we can do this because the code draws the background bar first,
-                 * then fills it with the amount of health left
-                 */
+
                 int sourceWidth = Math.round(fullBar.getWidth() * percentage);
                 float visibleWidth = getWidth() * percentage;
-
                 if (sourceWidth > 0) {
-                    batch.draw(fullBar, getX(), getY(), visibleWidth, getHeight(), 0, 0,
+                    batch.draw(
+                        fullBar,
+                        getX(), getY(),
+                        visibleWidth, getHeight(),
+                        0, 0,
                         sourceWidth, fullBar.getHeight(),
-                        false, false);}}};
+                        false, false
+                    );
+                }
+            }
+        };
 
         healthBar.setSize(hpBarTexture.getWidth(), hpBarTexture.getHeight());
-        healthBar.setPosition(10, 10);
+        healthBar.setPosition(10f, 10f);
         uiStage.addActor(healthBar);
+    }
+
+    public void dispose() {
+        uiStage.dispose();
+        invTexture.dispose();
+        hlTexture.dispose();
+        if (hpBarTexture != null) hpBarTexture.dispose();
+        if (fullBar != null) fullBar.dispose();
+        // The bread texture is owned and disposed by Main, not by UI.
     }
 }

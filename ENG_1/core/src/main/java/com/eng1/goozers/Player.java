@@ -132,14 +132,14 @@ public class Player {
     }
 
     /**
-     * reduces health if the result stays above zero
-     * damage that would reach zero or below is currently ignored
+     * reduces health without letting it fall below zero
+     * negative damage is ignored
      */
     public void takeDamage(int damage) {
-        if ((currentHP - damage) > 0) {
-            currentHP = currentHP - damage;
+        currentHP = Math.max(0, currentHP - Math.max(0, damage));
+        if (currentHP == 0) {
+            // TODO: launch lose menu
         }
-        // else -> launch #lose menu
     }
 
     /** tells UI how full the health bar should be, such as 0.5 for half full */
