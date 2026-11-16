@@ -9,11 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -39,7 +36,7 @@ public class Main extends ApplicationAdapter {
     private boolean gameStarted = false;
     private boolean gameOver = false;
     private World world;
-    private Body longBoiBody;
+    private Map gameMap;
     private Player player;
     private Texture map;
     private Texture pauseScreen;
@@ -48,8 +45,6 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private BitmapFont font;
 
-    private final float statueX = 227f;
-    private final float statueY = 305f;
     private boolean nearDuck = false;
     private boolean inspectedDuck = false;
     private float accumulator = 0f;
@@ -68,7 +63,7 @@ public class Main extends ApplicationAdapter {
      */
     @Override
     public void create() {
-        map = new Texture(Gdx.files.internal("map/test_map2.png"));
+        map = new Texture(Gdx.files.internal("map/test_map3.png"));
         map.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         batch = new SpriteBatch();
@@ -77,7 +72,7 @@ public class Main extends ApplicationAdapter {
         Box2D.init();
         world = new World(new Vector2(0, 0), true); // both values 0 = no gravity: top-down game
         player = new Player(world, 100f, 100f);
-        createLongBoi();
+        gameMap = new Map(world);
 
         npcTexture = new Texture(Gdx.files.internal("map/npcDuckRed.png"));
         npcTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -171,6 +166,21 @@ public class Main extends ApplicationAdapter {
             npc.draw(batch);
         }
         player.draw(batch);
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+
+            Vector2 mousePosition = viewport.unproject(
+                new Vector2(
+                    Gdx.input.getX(),
+                    Gdx.input.getY()
+                )
+            );
+
+            System.out.println(
+                "Statue X: " + mousePosition.x +
+                    " Statue Y: " + mousePosition.y
+            );
+        }
 
         float left = viewport.getCamera().position.x - viewport.getWorldWidth() / 2f;
         float top = viewport.getCamera().position.y + viewport.getWorldHeight() / 2f;
@@ -332,30 +342,12 @@ public class Main extends ApplicationAdapter {
     }
 
     /**
-     * to avoid the player from walking through the statue since it's a picture from
-     * the map,
-     * we add an invisible 20-by-20-pixel box that blocks movement through the
-     * statue
-     */
-    private void createLongBoi() {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(statueX / PPM, statueY / PPM);
-
-        longBoiBody = world.createBody(bodyDef);
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(10f / PPM, 10f / PPM);
-        longBoiBody.createFixture(shape, 0f);
-        shape.dispose();
-    }
-
-    /**
      * checks whether the player is near Long Boi and presses E, then shows the
      * message
      */
     private void drawInteraction() {
-        float dx = player.getCentreX() - statueX;
-        float dy = player.getCentreY() - statueY;
+        float dx = player.getCentreX() - gameMap.getStatueX();
+        float dy = player.getCentreY() - gameMap.getStatueY();
         nearDuck = dx * dx + dy * dy <= 22f * 22f;
 
         if (nearDuck && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
