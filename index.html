@@ -776,90 +776,116 @@
         <!-- 5. IMPLEMENTATION -->
         <div id="impl-folder" class="folder-content">
             <div class="folder-header">
-                <h3 class="folder-title">Implementation</h3>
+                <h3 class="folder-title">Implementation &amp; Executable Build</h3>
                 <div class="file-list">
-                    <a class="file-link" href="Impl1.pdf" target="_blank">📄 Download / Open Impl1.pdf</a>
-                    <a class="file-link" href="GoosePatrol.jar" target="_blank">🎮 Executable Game JAR</a>
-                    <a class="file-link" href="https://github.com/Khalid-Huseyn/ENG1-Group9" target="_blank">💻 GitHub Repository</a>
+                    <a class="file-link" href="Deliverables/Impl1.pdf" target="_blank">📄 Download / Open Impl1.pdf</a>
+                    <a class="file-link" href="Deliverables/GoosePatrol.jar" target="_blank">🎮 Download Executable JAR</a>
+                    <a class="file-link" href="https://github.com/your-org/goose-patrol" target="_blank">💻 Version Control Repository</a>
                 </div>
             </div>
-            <iframe class="pdf-viewer" src="Impl1.pdf" title="Impl1.pdf"></iframe>
+
+            <!-- 6.1 & 6.3 Summary Cards -->
+            <div class="week-grid">
+                <div class="week-box">
+                    <h4>6.1 Third Party Libraries and Assets</h4>
+                    <ul>
+                        <li><strong>Libraries:</strong> libGDX 1.14.2 provides rendering, input, and the Box2D wrapper [1]; Ashley 1.7.4 [2] and gdx-ai 1.8.2 [3] are declared dependencies under Apache 2.0 (matching <code>StartupHelper</code>). LWJGL 3.4.3 supports desktop execution under BSD 3-Clause [4]. Both licences permit redistribution and commercial use.</li>
+                        <li><strong>Asset Sources:</strong> Sprites and graphics created by Theo Shaykhulov; supplementary assets AI-generated with instructor approval; fonts, UI skin, and launcher icons use libGDX defaults.</li>
+                        <li><strong>Verification:</strong> Licences and native Box2D and FreeType notices [5] were checked against the final JAR (<code>REQ-NFR-04</code>).</li>
+                    </ul>
+                </div>
+
+                <div class="week-box">
+                    <h4>6.3 Architecture and Verification</h4>
+                    <ul>
+                        <li><strong>Construct Mapping:</strong> <code>Main</code> runs the loop while <code>GameEngine</code> stores pause state; <code>Player</code>, <code>NPC</code>, and <code>UI</code> fill the roles named <code>PlayerCharacter</code>, <code>Goose</code>, and <code>UserInterface</code> in <code>Arch1</code>.</li>
+                        <li><strong>Structural Gaps:</strong> Planned <code>Item</code> and <code>HiddenEvent</code> extension points are absent (<code>REQ-NFR-05</code>), and game rules still share classes with graphics (<code>REQ-NFR-06</code>).</li>
+                        <li><strong>Verification &amp; Scope:</strong> Game starts paused and freezes movement and physics (<code>REQ-SYS-02</code>); Java 17 compatibility, standalone JAR, and lab performance verified (<code>REQ-NFR-01–03</code>). <code>Req1</code> assigns <code>SYS-05</code> to A1 but its parent <code>USR-07</code> to A2, which will be reconciled in Assessment 2.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 6.2 Incomplete Assessment 1 Requirements Table -->
+            <h4 class="evidence-subheading">6.2 Incomplete Assessment 1 Requirements</h4>
+            <div style="overflow-x: auto; margin-bottom: 18px;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 14px; background-color: #fff;">
+                    <thead>
+                        <tr style="background-color: #f8f9fa; color: #0056b3; text-align: left;">
+                            <th style="padding: 10px 12px; border: 1px solid #dee2e6; width: 22%;">Requirement IDs</th>
+                            <th style="padding: 10px 12px; border: 1px solid #dee2e6;">Current Implementation &amp; Remaining Work</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px 12px; border: 1px solid #dee2e6;"><code>REQ-SYS-01, 03</code></td>
+                            <td style="padding: 10px 12px; border: 1px solid #dee2e6;"><code>Main</code> has a statue collider but no map boundary checks. The 300-second countdown and time display are absent.</td>
+                        </tr>
+                        <tr style="background-color: #f8f9fa;">
+                            <td style="padding: 10px 12px; border: 1px solid #dee2e6;"><code>REQ-SYS-04, 05</code></td>
+                            <td style="padding: 10px 12px; border: 1px solid #dee2e6;">NPCs chase the player, but spawning is timed rather than triggered by bread collection. Pecking and annoyance increases are absent.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px 12px; border: 1px solid #dee2e6;"><code>REQ-SYS-06, 11, 15</code></td>
+                            <td style="padding: 10px 12px; border: 1px solid #dee2e6;">UI displays slots. Two usable starting items, item effects and consumption, bread collection and goose dispersal are absent.</td>
+                        </tr>
+                        <tr style="background-color: #f8f9fa;">
+                            <td style="padding: 10px 12px; border: 1px solid #dee2e6;"><code>REQ-SYS-08, 09, 17</code></td>
+                            <td style="padding: 10px 12px; border: 1px solid #dee2e6;">Item and event counters and the waypoint marker are absent. UI displays a health bar changed by <code>H</code> for testing, rather than an annoyance bar driven by pecks.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px 12px; border: 1px solid #dee2e6;"><code>REQ-SYS-13, 16</code></td>
+                            <td style="padding: 10px 12px; border: 1px solid #dee2e6;"><code>Main</code> provides Long Boi dialogue. The one-time ticket reward and bus event are absent.</td>
+                        </tr>
+                        <tr style="background-color: #f8f9fa;">
+                            <td style="padding: 10px 12px; border: 1px solid #dee2e6;"><code>REQ-SYS-07, 14</code></td>
+                            <td style="padding: 10px 12px; border: 1px solid #dee2e6;">Victory checks and loss on timeout or full annoyance are absent.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- References -->
+            <div class="week-box" style="margin-bottom: 18px;">
+                <h4>References</h4>
+                <ol style="font-size: 13.5px;">
+                    <li>libGDX (n.d.). <em>libGDX</em>. Available at: <a href="https://libgdx.com" target="_blank">https://libgdx.com</a> (accessed 10/26).</li>
+                    <li>libGDX (n.d.). <em>Ashley</em>. Available at: <a href="https://github.com/libgdx/ashley" target="_blank">https://github.com/libgdx/ashley</a> (accessed 10/26).</li>
+                    <li>libGDX (n.d.). <em>gdx-ai</em>. Available at: <a href="https://github.com/libgdx/gdx-ai" target="_blank">https://github.com/libgdx/gdx-ai</a> (accessed 10/26).</li>
+                    <li>LWJGL (n.d.). <em>Lightweight Java Game Library 3</em>. Available at: <a href="https://www.lwjgl.org" target="_blank">https://www.lwjgl.org</a> (accessed 10/26).</li>
+                    <li>FreeType Project (n.d.). <em>FreeType</em>. Available at: <a href="https://freetype.org" target="_blank">https://freetype.org</a> (accessed 10/26).</li>
+                </ol>
+            </div>
+
+            <!-- Embedded PDF -->
+            <iframe class="pdf-viewer" src="Deliverables/Impl1.pdf" title="Impl1.pdf"></iframe>
         </div>
     </section>
 
     <script>
-        let allWeeksOpen = false;
-
-        function openFolder(folderId) {
-            allWeeksOpen = false;
-            const toggleAllBtn = document.getElementById('toggle-all-weeks-btn');
-            if (toggleAllBtn) {
-                toggleAllBtn.classList.remove('active');
-                toggleAllBtn.textContent = '📂 Show All Weeks';
-            }
-
-            document.querySelectorAll('.folder-content').forEach(el => {
-                el.classList.remove('show');
-            });
-            document.querySelectorAll('.folder-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-
+        function toggleFolder(folderId) {
             const targetFolder = document.getElementById(folderId);
             const targetBtn = document.querySelector(`.folder-btn[data-target="${folderId}"]`);
-            if (targetFolder) {
-                targetFolder.classList.add('show');
-            }
+            if (!targetFolder) return;
+
+            const isVisible = targetFolder.classList.contains('show');
+            targetFolder.classList.toggle('show', !isVisible);
             if (targetBtn) {
-                targetBtn.classList.add('active');
-            }
-        }
-
-        function toggleFolder(folderId) {
-            const folder = document.getElementById(folderId);
-            const isAlreadyOpen = folder.classList.contains('show') && !allWeeksOpen;
-
-            if (isAlreadyOpen) {
-                folder.classList.remove('show');
-                const btn = document.querySelector(`.folder-btn[data-target="${folderId}"]`);
-                if (btn) btn.classList.remove('active');
-                history.pushState(null, null, window.location.pathname);
-            } else {
-                openFolder(folderId);
-                history.pushState(null, null, '#' + folderId);
+                targetBtn.classList.toggle('active', !isVisible);
             }
         }
 
         function toggleAllWeeks() {
+            const weekFolders = document.querySelectorAll('.week-folder');
+            const weekBtns = document.querySelectorAll('.week-btn');
             const toggleAllBtn = document.getElementById('toggle-all-weeks-btn');
-            document.querySelectorAll('.folder-content').forEach(el => el.classList.remove('show'));
-            document.querySelectorAll('.folder-btn').forEach(btn => btn.classList.remove('active'));
+            const anyHidden = Array.from(weekFolders).some(f => !f.classList.contains('show'));
 
-            if (!allWeeksOpen) {
-                document.querySelectorAll('.week-folder').forEach(el => el.classList.add('show'));
-                document.querySelectorAll('.week-btn').forEach(btn => btn.classList.add('active'));
-                toggleAllBtn.classList.add('active');
-                toggleAllBtn.textContent = '📁 Collapse All Weeks';
-                allWeeksOpen = true;
-            } else {
-                toggleAllBtn.textContent = '📂 Show All Weeks';
-                allWeeksOpen = false;
+            weekFolders.forEach(folder => folder.classList.toggle('show', anyHidden));
+            weekBtns.forEach(btn => btn.classList.toggle('active', anyHidden));
+            if (toggleAllBtn) {
+                toggleAllBtn.textContent = anyHidden ? '📂 Hide All Weeks' : '📂 Show All Weeks';
             }
         }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const hash = window.location.hash.substring(1);
-            if (hash && document.getElementById(hash)) {
-                openFolder(hash);
-            }
-        });
-
-        window.addEventListener('hashchange', () => {
-            const hash = window.location.hash.substring(1);
-            if (hash && document.getElementById(hash)) {
-                openFolder(hash);
-            }
-        });
     </script>
 
 </body>
